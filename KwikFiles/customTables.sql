@@ -1,7 +1,8 @@
-CREATE TABLE `SocialIcons` (
+CREATE TABLE `SocialSites` (
     `UID`            INT UNSIGNED NOT NULL auto_increment,
     `AddDate`        timestamp NOT NULL default CURRENT_TIMESTAMP,
-    `SocialSite`     varchar(80),
+    `DelDate`        datetime,
+    `WebsiteName`    varchar(80),
     `IconHTML`       varchar(120),
   PRIMARY KEY (`UID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -17,7 +18,7 @@ CREATE TABLE `UserLinks` (
   PRIMARY KEY (`UID`),
   KEY `ix_UserLinks_UserPriority` (`UserUID`, `Priority`),
   CONSTRAINT `fk_UserLinks_SocialUID`
-      FOREIGN KEY (`SocialUID`) REFERENCES SocialIcons(`UID`),
+      FOREIGN KEY (`SocialUID`) REFERENCES SocialSites(`UID`),
   CONSTRAINT `fk_UserLinks_UserUID`
       FOREIGN KEY (`UserUID`) REFERENCES wtkUsers(`UID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -50,5 +51,5 @@ ALTER TABLE `wtkUsers` ADD `ShowAddressLink` char(1) DEFAULT 'N' AFTER `LangPref
 ALTER TABLE `wtkUsers` CHANGE `BackgroundType`
   `BackgroundType` CHAR(1) DEFAULT 'N' COMMENT 'None, Color, Gradient, Image';
 
-ALTER TABLE `wtkUsers` CHANGE `BackgroundType`
+ALTER TABLE `wtkUsers` CHANGE `BackgroundColor2`
   `BackgroundColor2` CHAR(1) DEFAULT 'N' COMMENT 'if gradient';
