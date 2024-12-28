@@ -1,9 +1,8 @@
 <?php
 $pgSecurityLevel = 1;
-// $gloLoginRequired = false;
+//$gloLoginRequired = false;
 require('wtk/wtkLogin.php');
-
-// $gloUserUID = 1;
+//$gloUserUID = 1;
 
 $pgSQL =<<<SQLVAR
 SELECT CONCAT(`FirstName`, ' ', COALESCE(`LastName`,'')) AS `Name`,
@@ -76,7 +75,8 @@ unset($pgPDO);
 //  END  Loop through and get websites
 
 if ($pgPhoto != ''):
-    $pgPhotoContent = file_get_contents($image);
+    $pgPhoto        = substr($pgPhoto,1);
+    $pgPhotoContent = file_get_contents($pgPhoto);
     $pgB64vCard     = base64_encode($pgPhotoContent);
     $pgB64mLine     = chunk_split($pgB64vCard,74,"\n");
     $pgPhoto        = preg_replace('/(.+)/', ' $1', $pgB64mLine);
