@@ -40,12 +40,13 @@ CREATE TABLE `UserWebsites` (
 
 ALTER TABLE `wtkUsers` CHANGE `Title` `Title` VARCHAR(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL;
 
-ALTER TABLE `wtkUsers` ADD `ShowAddressLink` char(1) DEFAULT 'N' AFTER `LangPref`,
+ALTER TABLE `wtkUsers`
+    ADD `ShowAddressLink` char(1) DEFAULT 'N' AFTER `LangPref`,
     ADD `ShowEmail` char(1) DEFAULT 'N' AFTER `ShowAddressLink`,
     ADD `ShowLocale` char(1) DEFAULT 'N' AFTER `ShowEmail`,
     ADD `BackgroundType` char(1) DEFAULT 'N' AFTER `ShowLocale`,
-    ADD `BackgroundColor` char(6) DEFAULT NULL AFTER `BackgroundType`,
-    ADD `BackgroundColor2` char(6) DEFAULT NULL AFTER `BackgroundColor`,
+    ADD `BackgroundColor` char(7) DEFAULT NULL AFTER `BackgroundType`,
+    ADD `BackgroundColor2` char(7) DEFAULT NULL AFTER `BackgroundColor`,
     ADD `BackgroundImage` char(12) DEFAULT NULL AFTER `BackgroundColor2`;
 
 ALTER TABLE `wtkUsers` CHANGE `BackgroundType`
@@ -53,3 +54,5 @@ ALTER TABLE `wtkUsers` CHANGE `BackgroundType`
 
 ALTER TABLE `wtkUsers` CHANGE `BackgroundColor2`
   `BackgroundColor2` CHAR(1) DEFAULT 'N' COMMENT 'if gradient';
+
+INSERT INTO `wtkPages` (`PageName`,`Path`, `FileName`) VALUES ('Social Media Sites', '/admin/', 'socialSiteList');

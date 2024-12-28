@@ -1,8 +1,7 @@
 <?php
-$pgSecurityLevel = 1;
-//$gloLoginRequired = false;
-require('wtk/wtkLogin.php');
-//$gloUserUID = 1;
+$gloLoginRequired = false;
+define('_RootPATH', '../');
+require('../wtk/wtkLogin.php');
 
 $pgSQL =<<<SQLVAR
 SELECT CONCAT(`FirstName`, ' ', COALESCE(`LastName`,'')) AS `Name`,
@@ -11,7 +10,7 @@ SELECT CONCAT(`FirstName`, ' ', COALESCE(`LastName`,'')) AS `Name`,
 FROM `wtkUsers`
 WHERE `UID` = :UserUID
 SQLVAR;
-$pgSqlFilter = array('UserUID' => $gloUserUID);
+$pgSqlFilter = array('UserUID' => $gloId);
 wtkSqlGetRow(wtkSqlPrep($pgSQL), $pgSqlFilter);
 
 $pgName = wtkSqlValue('Name');

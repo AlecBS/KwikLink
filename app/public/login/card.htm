@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+	<title>@UserName@</title>
+	<link rel="stylesheet" href="/wtk/css/materialIcons.css"/>
+	<link rel="stylesheet" href="/wtk/css/materialize.min.css">
+	<link rel="stylesheet" href="/wtk/css/wtkBlue.css">
+	<link rel="stylesheet" href="/wtk/css/wtkLight.css">
+	<link rel="stylesheet" href="/wtk/css/wtkGlobal.css">
+	<link rel="stylesheet" href="/wtk/css/fontawesome-all.min.css">
+	<link rel="shortcut icon" href="/imgs/favicon/favicon.ico" type="image/x-icon" />
+	<link rel="apple-touch-icon" sizes="152x152" href="/imgs/favicon/apple-touch-icon-152x152.png" />
+	<script type="text/javascript" src="/wtk/js/wtkUtils.js" defer></script>
+	<script type="text/javascript" src="/wtk/js/jquery.min.js" defer></script>
+	<script type="text/javascript" src="/wtk/js/materialize.min.js" defer></script>
+</head>
+<body onload="Javascript:wtkStartMaterializeCSS()">
+<div class="card b-shadow" style="max-width:450px;margin:auto">
+	@UserWithPhoto@
+	<div class="card-content">
+		@UserWithoutPhoto@
+		@ShowEmail@
+		@Location@
+		<br>
+		<div class="row">
+			@AddressVCard@
+			@CalendarLink@
+		</div>
+
+		@WebsiteLinks@
+		@SocialMedia@
+	</div>
+</div>
+<div id="loaderDiv1" class="wrapper-load active">
+	<div id="loaderDiv2" class="preloader-wrapper big">
+		<div class="spinner-layer spinner-custom">
+			<div class="circle-clipper left">
+				<div class="circle"></div>
+			</div>
+			<div class="gap-patch">
+				<div class="circle"></div>
+			</div>
+			<div class="circle-clipper right">
+				<div class="circle"></div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
