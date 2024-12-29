@@ -3,6 +3,7 @@ CREATE TABLE `SocialSites` (
     `AddDate`        timestamp NOT NULL default CURRENT_TIMESTAMP,
     `DelDate`        datetime,
     `WebsiteName`    varchar(80),
+    `ButtonColor`    varchar(24),
     `IconHTML`       varchar(120),
   PRIMARY KEY (`UID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -55,4 +56,23 @@ ALTER TABLE `wtkUsers` CHANGE `BackgroundType`
 ALTER TABLE `wtkUsers` CHANGE `BackgroundColor2`
   `BackgroundColor2` CHAR(1) DEFAULT 'N' COMMENT 'if gradient';
 
-INSERT INTO `wtkPages` (`PageName`,`Path`, `FileName`) VALUES ('Social Media Sites', '/admin/', 'socialSiteList');
+INSERT INTO `wtkPages` (`PageName`,`Path`, `FileName`) VALUES ('Social Media', '/admin/', 'socialSiteList');
+
+
+INSERT INTO `SocialSites` (`WebsiteName`, `ButtonColor`, `IconHTML`) VALUES
+('LinkedIn', 'blue darken-3', '<i class=\"fab fa-linkedin\"></i>'),
+('Facebook', 'indigo darken-2', '<i class=\"fab fa-square-facebook\"></i>'),
+('YouTube', 'red', '<i class=\"fab fa-youtube\"></i>'),
+('Twitter', 'blue', '<i class=\"fa-brands fa-twitter\"></i>'),
+('TikTok', 'black', '<i class=\"fa-brands fa-tiktok\"></i>'),
+('GitHub', 'black', '<i class=\"fab fa-github\"></i>'),
+('BlueSky', 'blue accent-3', '<i class=\"fa-brands fa-bluesky\"></i>'),
+('Discord', 'deep-purple darken-4', '<i class=\"fa-brands fa-discord\"></i>'),
+('Docker', 'blue darken-4', '<i class=\"fab fa-docker\"></i>'),
+('Spotify', 'green darken-2', '<i class=\"fab fa-spotify\"></i>'),
+('Twitch', 'deep-purple accent-1', '<i class=\"fab fa-twitch\"></i>'),
+('yahoo!', 'deep-purple accent-2', '<i class=\"fab fa-yahoo\"></i>'),
+('tumblr', 'black', '<i class=\"fab fa-tumblr\"></i>'),
+('threads', 'black', '<i class=\"fa-brands fa-threads\"></i>'),
+('reddit', 'deep-orange accent-3', '<i class=\"fab fa-reddit-alien\"></i>'),
+('Snapchat', 'yellow accent-2', '<i class=\"fa-brands fa-snapchat black-text\"></i>');

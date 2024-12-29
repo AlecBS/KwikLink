@@ -6,7 +6,7 @@ if (!isset($gloConnected)):
 endif;
 
 $pgSQL =<<<SQLVAR
-SELECT `UID`, `WebsiteName`, `IconHTML`
+SELECT `UID`, `WebsiteName`, `ButtonColor`, `IconHTML`
   FROM `SocialSites`
 WHERE `UID` = ?
 SQLVAR;
@@ -25,12 +25,10 @@ $pgHtm =<<<htmVAR
             <div class="row">
 htmVAR;
 
-$pgHtm .= wtkFormText('SocialSites', 'WebsiteName');
-if ($gloWTKmode == 'Copy'): // Copy data feature
-    $pgHtm = wtkReplace($pgHtm, ' name="Origwtk', ' name="Copywtk');
-    $gloWTKmode = 'ADD';
-endif;
-$pgHtm .= wtkFormText('SocialSites', 'IconHTML');
+$pgHtm .= wtkFormText('SocialSites', 'WebsiteName','text','','m4 s12');
+$pgHtm .= wtkFormText('SocialSites', 'ButtonColor','text','','m4 s12');
+$pgTmp  = wtkFormText('SocialSites', 'IconHTML','text','','m4 s12');
+$pgHtm .= wtkReplace($pgTmp, 'Icon H T M L','Icon HTML');
 
 $pgHtm .= wtkFormHidden('ID1', $gloId);
 $pgHtm .= wtkFormHidden('UID', wtkEncode('UID'));

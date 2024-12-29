@@ -6,7 +6,9 @@ if (!isset($gloConnected)):
 endif;
 
 $pgSQL =<<<SQLVAR
-SELECT `UID`, `WebsiteName`, `IconHTML`
+SELECT `UID`,
+    CONCAT('<a class="btn-floating ', `ButtonColor`,'">', `IconHTML`, '</a>') AS `Button`,
+    `WebsiteName`
   FROM `SocialSites`
 WHERE `DelDate` IS NULL
 SQLVAR;
@@ -58,7 +60,7 @@ $pgHtm .=<<<htmVAR
            <div class="filter-width">
               <input value="$pgFilterValue" name="wtkFilter" id="wtkFilter" type="search" placeholder="enter partial value to search for">
            </div>
-           
+
            <button onclick="Javascript:wtkBrowseFilter('socialSiteList','SocialSites')" id="wtkFilterBtn" type="button" class="btn waves-effect waves-light"><i class="material-icons">search</i></button>
         </div>
     </form>
@@ -66,7 +68,7 @@ htmVAR;
 
 $pgHtm .= '    <div class="wtk-list card b-shadow">' . "\n";
 $pgHtm .= wtkBuildDataBrowse($pgSQL, [], 'SocialSites', '/admin/socialSiteList.php');
-//$pgHtm  = wtkReplace($pgHtm, 'There is no data available.','no users yet');
+$pgHtm  = wtkReplace($pgHtm, 'H T M L','HTML');
 $pgHtm .= '</div></div>' . "\n";
 
 echo $pgHtm;
