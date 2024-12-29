@@ -4,10 +4,10 @@ require('wtk/wtkLogin.php');
 $gloId = wtkGetParam('id',1);
 
 $pgSQL =<<<SQLVAR
-SELECT CONCAT(COALESCE(`FirstName`,''), ' ', COALESCE(`LastName`,'')) AS `UserName`,
+SELECT COALESCE(`FullName`,'') AS `UserName`,
     `Title`, `FilePath`, `NewFileName`,`CellPhone`,`Email`,
     `Address`, `Address2`, `City`, `State`, `Zipcode`,
-    `ShowAddressLink`,`ShowEmail`,`ShowLocale`,
+    `PersonalURL`, `ShowAddressLink`,`ShowEmail`,`ShowLocale`,
     `BackgroundType`,`BackgroundColor`,`BackgroundColor2`,`BackgroundImage`
 FROM `wtkUsers`
 WHERE `UID` = :UserUID
@@ -27,6 +27,7 @@ $pgCity = wtkSqlValue('City');
 $pgState = wtkSqlValue('State');
 $pgZipcode = wtkSqlValue('Zipcode');
 $pgEmail = wtkSqlValue('Email');
+$pgPersonalURL = wtkSqlValue('PersonalURL'); // Calendar Link
 $pgShowAddressLink = wtkSqlValue('ShowAddressLink');
 $pgShowEmail = wtkSqlValue('ShowEmail');
 $pgShowLocale = wtkSqlValue('ShowLocale');
@@ -101,7 +102,7 @@ else:
     <div class="col s6">
         <table class="table-basic centered" width="90%"><tr>
             <td>
-                <a href="/login/vcard.php?id=$gloId" class="btn-floating deep-purple darken-2 waves-effect waves-purple"><i class="material-icons">person_add</i></a>
+                <a href="/login/vcard.php?id=$gloId" class="btn-floating waves-effect"><i class="material-icons">person_add</i></a>
             </td>
             <td>
                 <small>+ Address<br>Book</small>
@@ -110,6 +111,22 @@ else:
     </div>
 htmVAR;
     $pgTmp = wtkReplace($pgTmp, '@AddressVCard@', $pgVCFlink);
+endif;
+
+if ($pgPersonalURL == ''):
+    $pgTmp = wtkReplace($pgTmp, '@CalendarLink@','');
+else:
+    $pgCalendar =<<<htmVAR
+<table class="table-basic centered" width="90%"><tbody><tr>
+    <td>
+        <a href="$pgPersonalURL" target="_blank" class="btn-floating waves-effect"><i class="material-icons">date_range</i></a>
+    </td>
+    <td>
+    	<small>my schedule</small>
+    </td>
+</tr></tbody></table>
+htmVAR;
+    $pgTmp = wtkReplace($pgTmp, '@CalendarLink@',$pgCalendar);
 endif;
 
 echo $pgTmp;

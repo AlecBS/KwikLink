@@ -4,7 +4,7 @@ define('_RootPATH', '../');
 require('../wtk/wtkLogin.php');
 
 $pgSQL =<<<SQLVAR
-SELECT CONCAT(`FirstName`, ' ', COALESCE(`LastName`,'')) AS `Name`,
+SELECT COALESCE(`FullName`,'') AS `Name`,
     `Title`, `FilePath`, `NewFileName`,`CellPhone`,`Email`,
     `Address`, `Address2`, `City`, `State`, `Zipcode`
 FROM `wtkUsers`

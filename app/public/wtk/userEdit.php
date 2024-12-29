@@ -10,22 +10,9 @@ if ($gloId == 0): // from My Profile (wtk/user.php) page
 endif;
 
 $pgLang = wtkGetParam('wtkLang');
-if ($pgLang != ''):
-    if ($gloId == $gloUserUID):
-        $gloLang = $pgLang;
-        wtkSetCookie('wtkLang', $pgLang);
-    endif;
-    $pgHdrMsg = '<h5 class="green-text">' . wtkLang('You data has been saved') . '</h5>';
-else:
-    if ($gloId == $gloUserUID):
-        $pgHdrMsg = '<h4>' . wtkLang('Edit Your Profile') . '</h4>';
-    else:
-        $pgHdrMsg = '<h4>' . wtkLang('Edit Profile') . '</h4>';
-    endif;
-endif;
 
 $pgSQL =<<<SQLVAR
-SELECT `UID`, `FirstName`, `LastName`, `Title`, `Email`, `CellPhone`,
+SELECT `UID`, `FullName`, `Title`, `Email`, `CellPhone`,
     `Address`,`Address2`, `City`, `State`, `PersonalURL`,
     `WebPassword`, `FilePath`, `NewFileName`,
     `ShowAddressLink`,`ShowEmail`,`ShowLocale`,
@@ -37,40 +24,59 @@ wtkSqlGetRow($pgSQL, [$gloId]);
 
 $pgHtm =<<<htmVAR
 <div class="container">
-    $pgHdrMsg<br>
+    <h4>Edit Your Profile</h4>
+    <p>Leave blank anything you do not want visible in you KwikLink.</p><br>
     <div class="card content b-shadow">
         <form id="wtkForm" name="wtkForm" method="POST">
             <span id="formMsg" class="red-text">$gloFormMsg</span>
             <div class="row">
 htmVAR;
 
-$pgHtm .= wtkFormText('wtkUsers', 'FirstName');
-$pgHtm .= wtkFormText('wtkUsers', 'LastName');
+$pgHtm .= wtkFormText('wtkUsers', 'FullName');
 $pgHtm .= wtkFormText('wtkUsers', 'Title');
 $pgHtm .= wtkFormText('wtkUsers', 'Email', 'email');
-$pgTmpMode = $gloWTKmode;
-$gloWTKmode = 'ADD';
-$pgTmp = wtkFormText('wtkUsers', 'WebPassword', 'password', 'Your Password');
-$pgTmp = wtkReplace($pgTmp, '<input type','<input onchange="JavaScript:checkPassStrength(this.value)" type');
-$pgHtm .= $pgTmp;
-$gloWTKmode = $pgTmpMode;
 $pgHtm .= wtkFormText('wtkUsers', 'CellPhone', 'tel');
-$pgHtm .= '</div><div class="row">' . "\n";
 
 $pgValues = array(
     'checked' => 'Y',
     'not' => 'N'
     );
-$pgHtm .= wtkFormCheckbox('wtkUsers', 'ShowAddressLink', '',$pgValues,'m4 s12');
-$pgHtm .= wtkFormCheckbox('wtkUsers', 'ShowEmail', '',$pgValues,'m4 s12');
-$pgHtm .= wtkFormCheckbox('wtkUsers', 'ShowLocale', '',$pgValues,'m4 s12');
+$pgHtm .= wtkFormCheckbox('wtkUsers', 'ShowEmail', 'Show Email on KwikLink Card',$pgValues,'s12');
 
+$pgHtm .=<<<htmVAR
+</div>
+<div class="row">
+    <div class="col s12">
+        <div class="card">
+            <div class="card-content">
+                <h4>Address Information</h4>
+                <p>Check the &ldquo;Show Address Link&rdquo; if you want viewers
+                    to see an option to download and import your contact info
+                    into their Address Book (VCF file).
+                  This allows people to easily add you to their Address Book, so only
+                  include the information you want them to have on you!</p>
+                <p>By checking the &ldquo;Show Locale&rdquo;, you will show the city and/or
+                    state on your KwikLink card.<br>
+                <div class="row">
+htmVAR;
+$pgHtm .= wtkFormCheckbox('wtkUsers', 'ShowAddressLink', '',$pgValues,'m6 s12');
+$pgHtm .= wtkFormCheckbox('wtkUsers', 'ShowLocale', '',$pgValues,'m4 s12');
 $pgHtm .= '</div><div class="row">' . "\n";
 $pgHtm .= wtkFormText('wtkUsers', 'Address');
 $pgHtm .= wtkFormText('wtkUsers', 'Address2');
 $pgHtm .= wtkFormText('wtkUsers', 'City');
 $pgSQL  = "SELECT `LookupValue`, `LookupDisplay` FROM `wtkLookups` WHERE `LookupType` = 'USAstate' ORDER BY `LookupValue` ASC";
 $pgHtm .= wtkFormSelect('wtkUsers', 'State', $pgSQL, [], 'LookupDisplay', 'LookupValue');
+
+$pgHtm .=<<<htmVAR
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+htmVAR;
+
 
 $pgHtm .= wtkFormText('wtkUsers', 'PersonalURL','text', 'Schedule Meeting URL', 'm6 s12', 'N','like calendly.com');
 $pgBackgroundType = wtkSqlValue('BackgroundType');

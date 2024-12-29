@@ -56,6 +56,8 @@ ALTER TABLE `wtkUsers` CHANGE `BackgroundType`
 ALTER TABLE `wtkUsers` CHANGE `BackgroundColor2`
   `BackgroundColor2` CHAR(1) DEFAULT 'N' COMMENT 'if gradient';
 
+ALTER TABLE `wtkUsers` ADD `FullName` varchar(120) NULL DEFAULT NULL AFTER `LastName`;
+
 INSERT INTO `wtkPages` (`PageName`,`Path`, `FileName`) VALUES ('Social Media', '/admin/', 'socialSiteList');
 
 
@@ -63,7 +65,7 @@ INSERT INTO `SocialSites` (`WebsiteName`, `ButtonColor`, `IconHTML`) VALUES
 ('LinkedIn', 'blue darken-3', '<i class=\"fab fa-linkedin\"></i>'),
 ('Facebook', 'indigo darken-2', '<i class=\"fab fa-square-facebook\"></i>'),
 ('YouTube', 'red', '<i class=\"fab fa-youtube\"></i>'),
-('Twitter', 'blue', '<i class=\"fa-brands fa-twitter\"></i>'),
+('Twitter', 'blue', '<i class=\"fa-brands fa-x-twitter\"></i>'),
 ('TikTok', 'black', '<i class=\"fa-brands fa-tiktok\"></i>'),
 ('GitHub', 'black', '<i class=\"fab fa-github\"></i>'),
 ('BlueSky', 'blue accent-3', '<i class=\"fa-brands fa-bluesky\"></i>'),
