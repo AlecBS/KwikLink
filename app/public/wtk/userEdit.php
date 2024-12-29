@@ -26,7 +26,7 @@ endif;
 
 $pgSQL =<<<SQLVAR
 SELECT `UID`, `FirstName`, `LastName`, `Title`, `Email`, `CellPhone`,
-    `Address`,`Address2`, `City`, `State`,
+    `Address`,`Address2`, `City`, `State`, `PersonalURL`,
     `WebPassword`, `FilePath`, `NewFileName`,
     `ShowAddressLink`,`ShowEmail`,`ShowLocale`,
     `BackgroundType`,`BackgroundColor`,`BackgroundColor2`,`BackgroundImage`
@@ -72,6 +72,7 @@ $pgHtm .= wtkFormText('wtkUsers', 'City');
 $pgSQL  = "SELECT `LookupValue`, `LookupDisplay` FROM `wtkLookups` WHERE `LookupType` = 'USAstate' ORDER BY `LookupValue` ASC";
 $pgHtm .= wtkFormSelect('wtkUsers', 'State', $pgSQL, [], 'LookupDisplay', 'LookupValue');
 
+$pgHtm .= wtkFormText('wtkUsers', 'PersonalURL','text', 'Schedule Meeting URL', 'm6 s12', 'N','like calendly.com');
 $pgBackgroundType = wtkSqlValue('BackgroundType');
 $pgValues = array(
     'None' => 'N',
