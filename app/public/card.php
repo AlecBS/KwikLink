@@ -129,6 +129,36 @@ htmVAR;
     $pgTmp = wtkReplace($pgTmp, '@CalendarLink@',$pgCalendar);
 endif;
 
+// BEGIN Background Functionality
+$pgBackgroundType = wtkSqlValue('BackgroundType');
+$pgBackgroundColor = wtkSqlValue('BackgroundColor');
+$pgBackgroundColor2 = wtkSqlValue('BackgroundColor2');
+$pgBackgroundImage = wtkSqlValue('BackgroundImage');
+switch ($pgBackgroundType):
+    case 'C': // single color
+        $pgTmp = wtkReplace($pgTmp, 'max-width:450px',"background:$pgBackgroundColor;max-width:450px");
+        break;
+    case 'G': // Gradient background
+        $pgCSS =<<<htmVAR
+<style>
+.my-bkgrnd {
+    background: linear-gradient(to right, $pgBackgroundColor, $pgBackgroundColor2);
+}
+</style>
+htmVAR;
+        $pgTmp = wtkReplace($pgTmp, 'class="card b-shadow"','class="card b-shadow my-bkgrnd"');
+        $pgTmp = wtkReplace($pgTmp, '</head>', $pgCSS . '</head>');
+        break;
+    case 'I': // Image background
+//        code
+        break;
+    default: // 'N': // none
+        // /do nothing
+        break;
+endswitch;
+
+//  END  Background Functionality
+
 echo $pgTmp;
 /*
 $pgTmp = wtkReplace($pgTmp, '@UserName@', $pgUserName);
