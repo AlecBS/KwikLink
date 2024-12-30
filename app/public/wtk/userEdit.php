@@ -41,7 +41,8 @@ $pgValues = array(
     'checked' => 'Y',
     'not' => 'N'
     );
-$pgHtm .= wtkFormCheckbox('wtkUsers', 'ShowEmail', 'Show Email on KwikLink Card',$pgValues,'s12');
+$pgHtm .= wtkFormCheckbox('wtkUsers', 'ShowEmail', 'Show Email on KwikLink Card',$pgValues);
+$pgHtm .= wtkFormText('wtkUsers', 'PersonalURL','text', 'Schedule Meeting URL', 'm6 s12', 'N','like calendly.com');
 
 $pgHtm .=<<<htmVAR
 </div>
@@ -68,17 +69,35 @@ $pgHtm .= wtkFormText('wtkUsers', 'City');
 $pgSQL  = "SELECT `LookupValue`, `LookupDisplay` FROM `wtkLookups` WHERE `LookupType` = 'USAstate' ORDER BY `LookupValue` ASC";
 $pgHtm .= wtkFormSelect('wtkUsers', 'State', $pgSQL, [], 'LookupDisplay', 'LookupValue');
 
+$pgPhotoUpload = wtkFormFile('wtkUsers','FilePath','/imgs/user/','NewFileName','User Photo','m6 s12','myPhoto');
+
 $pgHtm .=<<<htmVAR
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="row">
+    <div class="col m6 s12">
+        <br>
+        <div class="card">
+            <div class="card-content">
+                <h4>Primary Photo</h4>
+                <p>This will be your primary photo at the top of your KwikLink.</p>
+                <div class="row">
+                $pgPhotoUpload
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col m6 s12">
+        <br>
+        <div class="card">
+            <div class="card-content">
+                <h4>Background Options</h4>
+                <p>By default the background will be white but you can choose what you like.</p>
+                <br>
+                <div class="row">
 htmVAR;
 
-
-$pgHtm .= wtkFormText('wtkUsers', 'PersonalURL','text', 'Schedule Meeting URL', 'm6 s12', 'N','like calendly.com');
 $pgBackgroundType = wtkSqlValue('BackgroundType');
 $pgValues = array(
     'None' => 'N',
@@ -108,6 +127,15 @@ $pgTmp = wtkReplace($pgTmp, 'type="text"','type="text" class="w72"');
 //$pgTmp  = wtkReplace($pgTmp, '<input type="text"','<input type="text" oninput="JavaScript:setCssRoot(this.id, this.jscolor)"');
 $pgHtm .= $pgTmp;
 
+$pgHtm .=<<<htmVAR
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+htmVAR;
+
 //$pgHtm .= wtkFormFile('Upload Photo', 'wtkUsers', 'NewFileName', '../imgscli/', '../../imgscli/');
 // function wtkFormFile($fncLabel, $fncTable, $fncField, $fncPathShow, $fncPathSave = '../', $fncColSpan = '1') {
 /*
@@ -119,7 +147,6 @@ Clean code:
 https://www.digitalocean.com/community/tutorials/js-file-reader
 */
 
-$pgHtm .= wtkFormFile('wtkUsers','FilePath','/imgs/user/','NewFileName','User Photo','m6 s12','myPhoto');
 
 // $pgFilePath = wtkSqlValue('FilePath');
 // $pgNewFileName = wtkSqlValue('NewFileName');
