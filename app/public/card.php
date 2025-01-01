@@ -117,14 +117,16 @@ if ($pgPersonalURL == ''):
     $pgTmp = wtkReplace($pgTmp, '@CalendarLink@','');
 else:
     $pgCalendar =<<<htmVAR
-<table class="table-basic centered" width="90%"><tbody><tr>
-    <td>
-        <a href="$pgPersonalURL" target="_blank" class="btn-floating waves-effect"><i class="material-icons">date_range</i></a>
-    </td>
-    <td>
-    	<small>my schedule</small>
-    </td>
-</tr></tbody></table>
+<div class="col s6">
+    <table class="table-basic centered" width="90%"><tbody><tr>
+        <td>
+            <a href="$pgPersonalURL" target="_blank" class="btn-floating waves-effect"><i class="material-icons">date_range</i></a>
+        </td>
+        <td>
+        	<small>my schedule</small>
+        </td>
+    </tr></tbody></table>
+</div>
 htmVAR;
     $pgTmp = wtkReplace($pgTmp, '@CalendarLink@',$pgCalendar);
 endif;
@@ -146,11 +148,41 @@ switch ($pgBackgroundType):
 }
 </style>
 htmVAR;
-        $pgTmp = wtkReplace($pgTmp, 'class="card b-shadow"','class="card b-shadow my-bkgrnd"');
+        $pgTmp = wtkReplace($pgTmp, 'class="card b-shadow"','class="card b-shadow my-bkgrnd "');
         $pgTmp = wtkReplace($pgTmp, '</head>', $pgCSS . '</head>');
         break;
     case 'I': // Image background
-//        code
+        $pgCSS =<<<htmVAR
+<style>
+.my-bkgrnd {
+    position: relative;
+    overflow: hidden;
+}
+
+.my-bkgrnd::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('imgs/background/$pgBackgroundImage');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.27; /* Set the opacity for the background image */
+    z-index: 0; /* Ensure the background is behind the text */
+}
+
+.card-content {
+    position: relative;
+    z-index: 1; /* Ensure the text is above the background image */
+}
+</style>
+htmVAR;
+        $pgTmp = wtkReplace($pgTmp, '<div class="card-content">','<div class="my-bkgrnd"><div class="card-content">');
+        $pgTmp = wtkReplace($pgTmp, '@SocialMedia@','@SocialMedia@' . "\n" . '</div>');
+        $pgTmp = wtkReplace($pgTmp, '</head>', $pgCSS . '</head>');
         break;
     default: // 'N': // none
         // /do nothing
