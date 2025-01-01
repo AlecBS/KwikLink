@@ -10,6 +10,12 @@ by simply running a few .sh scripts.  All the instructions are listed here:
 
 https://hub.docker.com/r/proglabs/wizards-toolkit
 
+## GIT Hub
+
+If you do not use Docker, you can retrieve Wizard's Toolkit from GitHub at:
+
+https://github.com/AlecBS/WizardsToolkit
+
 ## Wizard's Toolkit
 
 Once downloaded and installed, you can find additional information here:
