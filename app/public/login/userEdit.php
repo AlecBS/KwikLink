@@ -2,7 +2,7 @@
 $pgSecurityLevel = 1;
 if (!isset($gloConnected)):
     define('_RootPATH', '../');
-    require('wtkLogin.php');
+    require('../wtk/wtkLogin.php');
 endif;
 
 if ($gloId == 0): // from My Profile (wtk/user.php) page
@@ -18,9 +18,10 @@ SELECT `UID`, `FullName`, `Title`, `Email`, `CellPhone`,
     `ShowAddressLink`,`ShowEmail`,`ShowLocale`,
     `BackgroundType`,`BackgroundColor`,`BackgroundColor2`,`BackgroundImage`
   FROM `wtkUsers`
-WHERE `UID` = ?
+WHERE `UID` = :UserUID
 SQLVAR;
-wtkSqlGetRow($pgSQL, [$gloId]);
+$pgSqlFilter = array('UserUID' => $gloId);
+wtkSqlGetRow($pgSQL, $pgSqlFilter);
 
 $pgHtm =<<<htmVAR
 <div class="container">
@@ -141,7 +142,40 @@ $pgHtm .=<<<htmVAR
     </div>
 </div>
 <div class="row">
+    <div class="col m6 s12">
+        <br>
+        <div class="card">
+            <div class="card-content">
+                <h4>Social Media Links</h4>
+                <p>Choose which social media links you want on your KwikLink card.</p>
+                <br>
+                <div class="row">
 htmVAR;
+
+$pgSQL =<<<SQLVAR
+SELECT ul.`UID`,
+    CONCAT('<a class="btn-floating ', ss.`ButtonColor`,'">', ss.`IconHTML`, '</a>') AS `Button`,
+    ul.`SocialLink`
+  FROM `SocialSites` ss
+    INNER JOIN `UserLinks` ul ON ul.`SocialUID` = ss.`UID`
+WHERE ul.`UserUID` = :UserUID
+ORDER BY ul.`Priority` ASC
+SQLVAR;
+
+$gloEditPage = 'login/socialEdit';
+$gloAddPage  = $gloEditPage;
+$gloDelPage  = 'UserLinks';
+$pgHtm .= '<div id="socialDIV">' . "\n";
+$pgHtm .= wtkBuildDataBrowse($pgSQL, $pgSqlFilter, 'socialLinks', '/login/socialLinks.php', 'Y');
+
+$pgHtm .=<<<htmVAR
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+htmVAR;
+
 
 //$pgHtm .= wtkFormFile('Upload Photo', 'wtkUsers', 'NewFileName', '../imgscli/', '../../imgscli/');
 // function wtkFormFile($fncLabel, $fncTable, $fncField, $fncPathShow, $fncPathSave = '../', $fncColSpan = '1') {
@@ -225,7 +259,7 @@ $pgHtm .= wtkFormHidden('ID1', $gloId);
 $pgHtm .= wtkFormHidden('UID', wtkEncode('UID'));
 $pgHtm .= wtkFormHidden('HasSelect', 'Y');
 $pgHtm .= wtkFormHidden('wtkMode', $gloWTKmode);
-$pgHtm .= wtkFormHidden('wtkGoToURL', '../user.php');
+$pgHtm .= wtkFormHidden('wtkGoToURL', '../../login/user.php');
 
 $pgHtm .= '            </div><br>' . "\n";
 $pgMode = wtkGetParam('Mode');

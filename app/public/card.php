@@ -196,19 +196,6 @@ echo $pgTmp;
 $pgTmp = wtkReplace($pgTmp, '@UserName@', $pgUserName);
 $pgTmp = wtkReplace($pgTmp, '@UserName@', $pgUserName);
 
-@CalendarLink@
-<div class="col s6">
-    <table class="table-basic centered" width="90%"><tr>
-        <td>
-            <a href="https://calendly.com/alec-sherman/30min" target="_blank" class="btn-floating deep-purple darken-2 waves-effect waves-purple"><i class="material-icons">date_range</i></a>
-        </td>
-        <td>
-            <small>Schedule<br>demo</small>
-        </td>
-    </tr></table>
-</div>
-
-
 @WebsiteLinks@
 <br>
 <ul class="collection with-header">

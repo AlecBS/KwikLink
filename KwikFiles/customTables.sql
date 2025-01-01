@@ -11,7 +11,6 @@ CREATE TABLE `SocialSites` (
 CREATE TABLE `UserLinks` (
     `UID`            INT UNSIGNED NOT NULL auto_increment,
     `AddDate`        timestamp NOT NULL default CURRENT_TIMESTAMP,
-    `DelDate`        datetime,
     `UserUID`        INT UNSIGNED,
     `SocialUID`      INT UNSIGNED,
     `SocialLink`     varchar(180),
