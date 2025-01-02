@@ -188,8 +188,30 @@ htmVAR;
         // /do nothing
         break;
 endswitch;
-
 //  END  Background Functionality
+
+// BEGIN Social Links
+$pgSQL =<<<SQLVAR
+SELECT CONCAT('<a target="_blank" href="', ul.`SocialLink`,'" class="btn-floating ', ss.`ButtonColor`,'">', ss.`IconHTML`, '</a>') AS `Button`
+  FROM `SocialSites` ss
+    INNER JOIN `UserLinks` ul ON ul.`SocialUID` = ss.`UID`
+WHERE ul.`UserUID` = :UserUID
+ORDER BY ul.`Priority` ASC
+SQLVAR;
+
+$pgSocialBtns = '';
+$pgPDO = $gloWTKobjConn->prepare($pgSQL);
+$pgPDO->execute($pgSqlFilter);
+while ($gloPDOrow = $pgPDO->fetch(PDO::FETCH_ASSOC)):
+    $pgSocialBtns .= $gloPDOrow['Button'];
+
+endwhile;
+unset($pgPDO);
+if ($pgSocialBtns != ''):
+    $pgSocialBtns = '<br><small>Social Profile</small><br>' . $pgSocialBtns . '<br>';
+endif;
+$pgTmp = wtkReplace($pgTmp, '@SocialMedia@', $pgSocialBtns);
+//  END  Social Links
 
 echo $pgTmp;
 /*
@@ -215,14 +237,6 @@ $pgTmp = wtkReplace($pgTmp, '@UserName@', $pgUserName);
     <li class="collection-item"><a target="_blank" href="https://github.com/AlecBS">GitHub</a>
         <br>making the world a better place one line of code at a time</li>
 </ul>
-
-@SocialMedia@
-<small>Social Profile</small>
-<br>
-<a href="https://www.linkedin.com/in/alecsherman/" target="_blank" class="btn-floating blue darken-3"><i class="fab fa-linkedin"></i></a>
-<a href="https://youtube.com/BusinessOfProgramming" target="_blank" class="btn-floating red "><i class="fab fa-youtube"></i></a>
-<a href="https://www.facebook.com/profile.php?id=100067646815322" target="_blank" class="btn-floating indigo darken-2 m-t-10"><i class="fab fa-facebook"></i></a>
-<br>
 */
 
 ?>

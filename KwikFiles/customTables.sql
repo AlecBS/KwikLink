@@ -77,3 +77,24 @@ INSERT INTO `SocialSites` (`WebsiteName`, `ButtonColor`, `IconHTML`) VALUES
 ('threads', 'black', '<i class=\"fa-brands fa-threads\"></i>'),
 ('reddit', 'deep-orange accent-3', '<i class=\"fab fa-reddit-alien\"></i>'),
 ('Snapchat', 'yellow accent-2', '<i class=\"fa-brands fa-snapchat black-text\"></i>');
+
+-- SQL Trigger for Priority defaulting based on UserUID
+CREATE TRIGGER `tib_UserLinks`
+    BEFORE INSERT ON `UserLinks`
+    FOR EACH ROW
+  BEGIN
+    DECLARE fncLastPriority SMALLINT;
+
+    SELECT COUNT(*) INTO fncLastPriority
+      FROM `UserLinks`
+    WHERE `UserUID` = NEW.`UserUID`;
+
+    IF (fncLastPriority > 0) THEN
+        SELECT `Priority` INTO fncLastPriority
+          FROM `UserLinks`
+        WHERE `UserUID` = NEW.`UserUID`
+        ORDER BY `Priority` DESC LIMIT 1;
+    END IF;
+    SET NEW.`Priority` = (fncLastPriority + 10);
+END
+$$

@@ -7,7 +7,7 @@ endif;
 // See SQL to generate table below
 
 $pgSQL =<<<SQLVAR
-SELECT `UID`, `SocialLink`
+SELECT `UID`, `SocialUID`, `SocialLink`
   FROM `UserLinks`
 WHERE `UID` = ?
 SQLVAR;
