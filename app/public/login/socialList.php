@@ -24,7 +24,7 @@ $pgSqlFilter = array('UserUID' => $gloUserUID);
 $gloEditPage = 'login/socialEdit';
 $gloAddPage  = $gloEditPage;
 $gloDelPage  = 'UserLinks';
-$pgHtm = wtkBuildDataBrowse($pgSQL, $pgSqlFilter, 'UserLinks', '/login/socialLinks.php', 'Y');
+$pgHtm = wtkBuildDataBrowse($pgSQL, $pgSqlFilter, 'UserLinks', '/login/socialList.php', 'Y');
 
 echo $pgHtm;
 exit;
