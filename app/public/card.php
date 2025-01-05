@@ -204,7 +204,6 @@ $pgPDO = $gloWTKobjConn->prepare($pgSQL);
 $pgPDO->execute($pgSqlFilter);
 while ($gloPDOrow = $pgPDO->fetch(PDO::FETCH_ASSOC)):
     $pgSocialBtns .= $gloPDOrow['Button'];
-
 endwhile;
 unset($pgPDO);
 if ($pgSocialBtns != ''):
@@ -213,30 +212,33 @@ endif;
 $pgTmp = wtkReplace($pgTmp, '@SocialMedia@', $pgSocialBtns);
 //  END  Social Links
 
+// BEGIN UserWebsites
+$pgSQL =<<<SQLVAR
+SELECT `WebsiteName`, `WebsiteLink`, `WebsiteDesc`
+  FROM `UserWebsites`
+WHERE `UserUID` = :UserUID
+ORDER BY `Priority` ASC
+SQLVAR;
+
+$pgWebsites = '';
+$pgStart = '<li class="collection-item"><a target="_blank" href="';
+$pgPDO = $gloWTKobjConn->prepare($pgSQL);
+$pgPDO->execute($pgSqlFilter);
+while ($gloPDOrow = $pgPDO->fetch(PDO::FETCH_ASSOC)):
+    $pgWebsiteName = $gloPDOrow['WebsiteName'];
+    $pgWebsiteLink = $gloPDOrow['WebsiteLink'];
+    $pgWebsiteDesc = $gloPDOrow['WebsiteDesc'];
+    $pgWebsites .= $pgStart . $pgWebsiteLink . '">' . $pgWebsiteName . '</a>' . "\n";
+    $pgWebsites .= '<br>' . $pgWebsiteDesc . '</li>' . "\n";
+endwhile;
+unset($pgPDO);
+if ($pgWebsites != ''):
+    $pgStart  = '<ul class="collection with-header">' . "\n";
+    $pgStart .= '<li class="collection-header"><h6>Websites</h6></li>' . "\n";
+    $pgWebsites = $pgStart . $pgWebsites . '</ul>';
+endif;
+$pgTmp = wtkReplace($pgTmp, '@WebsiteLinks@', $pgWebsites);
+//  END  UserWebsites
+
 echo $pgTmp;
-/*
-$pgTmp = wtkReplace($pgTmp, '@UserName@', $pgUserName);
-$pgTmp = wtkReplace($pgTmp, '@UserName@', $pgUserName);
-
-@WebsiteLinks@
-<br>
-<ul class="collection with-header">
-    <li class="collection-header"><h6>Websites</h6></li>
-    <li class="collection-item"><a target="_blank" href="https://wizardstoolkit.com">Wizard&rsquo;s Toolkit</a>
-        <br>low-code development library</li>
-    <li class="collection-item"><a target="_blank" href="https://programminglabs.com/">Programming Labs</a>
-        <br>agile software dev team</li>
-    <li class="collection-item"><a target="_blank" href="https://intellimuse.app">Intellimuse</a>
-        <br>customizable AI companions</li>
-    <li class="collection-item"><a target="_blank" href="https://wizardsabacus.com">Wizard&rsquo;s Abacus</a>
-        <br>time tracking and payroll</li>
-    <li class="collection-item"><a target="_blank" href="https://wizbits.me/">WizBits</a>
-        <br>shortened URL service</li>
-    <li class="collection-item"><a target="_blank" href="https://extragood.info/">Mage Page</a>
-        <br>landing pages</li>
-    <li class="collection-item"><a target="_blank" href="https://github.com/AlecBS">GitHub</a>
-        <br>making the world a better place one line of code at a time</li>
-</ul>
-*/
-
 ?>
