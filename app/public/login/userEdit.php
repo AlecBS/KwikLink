@@ -128,7 +128,8 @@ $pgTmp = wtkReplace($pgTmp, 'type="text"','type="text" class="w72"');
 //$pgTmp  = wtkReplace($pgTmp, '<input type="text"','<input type="text" oninput="JavaScript:setCssRoot(this.id, this.jscolor)"');
 $pgHtm .= $pgTmp;
 
-$pgTmp = wtkFormFile('wtkUsers','FilePath','/imgs/background/','BackgroundImage','Background Image','m6 s12');
+$pgTmp = wtkFormFile('wtkUsers','FilePath','/imgs/background/','BackgroundImage','Background Image','m6 s12','','N','accept="image/*"','Y',2);
+
 $pgTmp = wtkReplace($pgTmp, 'class="input-field col m6','id="bkImg" class="input-field col m6');
 if ($pgBackgroundType != 'I'):
     $pgTmp = wtkReplace($pgTmp, 'input-field col','hide input-field col');
