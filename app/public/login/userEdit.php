@@ -149,7 +149,7 @@ $pgHtm .=<<<htmVAR
                 <h4>Social Media Links</h4>
                 <p>Choose which social media links you want on your KwikLink card.</p>
                 <br>
-                <div class="row">
+                <div id="socialDIV">
 htmVAR;
 
 $pgSQL =<<<SQLVAR
@@ -178,15 +178,55 @@ htmVAR;
 $gloEditPage = 'login/socialEdit';
 $gloAddPage  = $gloEditPage;
 $gloDelPage  = 'UserLinks';
-$pgHtm .= '<div id="socialDIV">' . "\n";
-$pgHtm .= wtkBuildDataBrowse($pgSQL, $pgSqlFilter, 'UserLinks', '/login/socialList.php', 'Y');
+$gloSkipFooter = true;
 
+$pgTmp  = wtkBuildDataBrowse($pgSQL, $pgSqlFilter, 'UserLinks', '/login/socialList.php', 'Y');
+$pgHtm .= wtkReplace($pgTmp, 'No data.','no social media links yet');
+
+// BEGIN UserWebsites
 $pgHtm .=<<<htmVAR
-                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="col m6 s12">
+        <br>
+        <div class="card">
+            <div class="card-content">
+                <h4>Your Websites</h4>
+                <p>Choose which websites you want on your KwikLink card.</p>
+                <br>
+                <div id="websiteDIV">
+
+htmVAR;
+
+$pgSQL =<<<SQLVAR
+SELECT `UID`,
+    CONCAT('<a draggable="true" ondragstart="wtkDragStart(', `UID`,
+        ',', ROW_NUMBER() OVER(ORDER BY `Priority`),');" ondrop="wtkDropId(', `UID`,
+        ',', ROW_NUMBER() OVER(ORDER BY `Priority`),')" ondragover="wtkDragOver(event)" class="btn btn-floating ">',
+        '<i class="material-icons" alt="drag to change priorty" title="drag to change priorty">drag_handle</i></a>')
+        AS `Prioritize`,
+    CONCAT(`WebsiteName`, '<br>',`WebsiteLink`) AS `Website`, `WebsiteDesc` AS `Description`
+  FROM `UserWebsites`
+WHERE `UserUID` = :UserUID
+ORDER BY `Priority` ASC
+SQLVAR;
+
+$gloEditPage = 'login/websiteEdit';
+$gloAddPage  = $gloEditPage;
+$gloDelPage  = 'UserWebsites';
+
+$pgTmp  = wtkBuildDataBrowse($pgSQL, $pgSqlFilter, 'UserWebsites', '/login/websiteList.php', 'Y');
+$pgHtm .= wtkReplace($pgTmp, 'No data.','no websites yet');
+//  END  UserWebsites
+
+$pgHtm .=<<<htmVAR
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 htmVAR;
 
 $pgHtm .= wtkFormHidden('wtkfImgWidth', 300);

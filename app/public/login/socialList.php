@@ -4,6 +4,7 @@ if (!isset($gloConnected)):
     define('_RootPATH', '../');
     require('../wtk/wtkLogin.php');
 endif;
+$gloSkipFooter = true;
 
 $pgSQL =<<<SQLVAR
 SELECT ul.`UID`,
@@ -24,6 +25,8 @@ $pgSqlFilter = array('UserUID' => $gloUserUID);
 $gloEditPage = 'login/socialEdit';
 $gloAddPage  = $gloEditPage;
 $gloDelPage  = 'UserLinks';
+
+wtkSearchReplace('No data.','no social media links yet');
 $pgHtm = wtkBuildDataBrowse($pgSQL, $pgSqlFilter, 'UserLinks', '/login/socialList.php', 'Y');
 
 echo $pgHtm;
