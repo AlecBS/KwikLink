@@ -136,7 +136,17 @@ if ($pgBackgroundType != 'I'):
 endif;
 $pgHtm .= $pgTmp;
 
+$pgHtm .= wtkFormHidden('wtkfImgWidth', 300);
+$pgHtm .= wtkFormHidden('wtkfImgHeight', 300);
+$pgHtm .= wtkFormHidden('ID1', $gloId);
+$pgHtm .= wtkFormHidden('UID', wtkEncode('UID'));
+$pgHtm .= wtkFormHidden('HasSelect', 'Y');
+$pgHtm .= wtkFormHidden('wtkMode', $gloWTKmode);
+$pgHtm .= wtkFormHidden('wtkGoToURL', '../../login/user.php');
+$pgHtm .= wtkFormWriteUpdField();
+
 $pgHtm .=<<<htmVAR
+                    </form>
                 </div>
             </div>
         </div>
@@ -230,14 +240,6 @@ $pgHtm .=<<<htmVAR
 </div>
 htmVAR;
 
-$pgHtm .= wtkFormHidden('wtkfImgWidth', 300);
-$pgHtm .= wtkFormHidden('wtkfImgHeight', 300);
-$pgHtm .= wtkFormHidden('ID1', $gloId);
-$pgHtm .= wtkFormHidden('UID', wtkEncode('UID'));
-$pgHtm .= wtkFormHidden('HasSelect', 'Y');
-$pgHtm .= wtkFormHidden('wtkMode', $gloWTKmode);
-$pgHtm .= wtkFormHidden('wtkGoToURL', '../../login/user.php');
-
 $pgHtm .= '            </div><br>' . "\n";
 $pgMode = wtkGetParam('Mode');
 if ($pgMode == 'modal'):
@@ -249,9 +251,7 @@ else:
     $pgHtm .= wtkUpdateBtns() . "\n";
 endif;
 
-$pgHtm .= wtkFormWriteUpdField();
 $pgHtm .=<<<htmVAR
-        </form>
     </div>
 </div>
 <script type="text/javascript">

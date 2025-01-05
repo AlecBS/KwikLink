@@ -53,7 +53,7 @@ ALTER TABLE `wtkUsers` CHANGE `BackgroundType`
   `BackgroundType` CHAR(1) DEFAULT 'N' COMMENT 'None, Color, Gradient, Image';
 
 ALTER TABLE `wtkUsers` CHANGE `BackgroundColor2`
-  `BackgroundColor2` CHAR(1) DEFAULT 'N' COMMENT 'if gradient';
+  `BackgroundColor2` CHAR(7) DEFAULT 'N' COMMENT 'if gradient';
 
 ALTER TABLE `wtkUsers` ADD `FullName` varchar(120) NULL DEFAULT NULL AFTER `LastName`;
 
