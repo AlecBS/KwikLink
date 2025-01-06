@@ -16,7 +16,7 @@ SELECT `UID`, `FullName`, `Title`, `Email`, `CellPhone`,
     `Address`,`Address2`, `City`, `State`, `PersonalURL`,
     `WebPassword`, `FilePath`, `NewFileName`,
     `ShowAddressLink`,`ShowEmail`,`ShowLocale`,
-    `BackgroundType`,`BackgroundColor`,`BackgroundColor2`,`BGFilePath`, `BackgroundImage`
+    `BackgroundType`,`BackgroundColor`,`BackgroundColor2`,`BGFilePath`,`BackgroundImage`
   FROM `wtkUsers`
 WHERE `UID` = :UserUID
 SQLVAR;
@@ -181,8 +181,14 @@ $pgHtm .=<<<htmVAR
 <input type="hidden" id="wtkDragTable" value="UserLinks">
 <input type="hidden" id="wtkDragLocation" value="table">
 <input type="hidden" id="wtkDragColumn" value="Priority">
-<input type="hidden" id="wtkDragFilter" value="$gloId">
 <input type="hidden" id="wtkDragRefresh" value="/login/socialList">
+<input type="hidden" id="wtkDragFilter" value="">
+
+<input type="hidden" id="wtkDragTable2" value="UserWebsites">
+<input type="hidden" id="wtkDragLocation2" value="table">
+<input type="hidden" id="wtkDragColumn2" value="Priority">
+<input type="hidden" id="wtkDragRefresh2" value="/login/websiteList">
+<input type="hidden" id="wtkDragFilter2" value="">
 htmVAR;
 
 $gloEditPage = 'login/socialEdit';
@@ -214,7 +220,7 @@ $pgSQL =<<<SQLVAR
 SELECT `UID`,
     CONCAT('<a draggable="true" ondragstart="wtkDragStart(', `UID`,
         ',', ROW_NUMBER() OVER(ORDER BY `Priority`),');" ondrop="wtkDropId(', `UID`,
-        ',', ROW_NUMBER() OVER(ORDER BY `Priority`),')" ondragover="wtkDragOver(event)" class="btn btn-floating ">',
+        ',', ROW_NUMBER() OVER(ORDER BY `Priority`),',2)" ondragover="wtkDragOver(event)" class="btn btn-floating ">',
         '<i class="material-icons" alt="drag to change priorty" title="drag to change priorty">drag_handle</i></a>')
         AS `Prioritize`,
     CONCAT(`WebsiteName`, '<br>',`WebsiteLink`) AS `Website`, `WebsiteDesc` AS `Description`
