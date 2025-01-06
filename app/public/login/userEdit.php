@@ -16,7 +16,7 @@ SELECT `UID`, `FullName`, `Title`, `Email`, `CellPhone`,
     `Address`,`Address2`, `City`, `State`, `PersonalURL`,
     `WebPassword`, `FilePath`, `NewFileName`,
     `ShowAddressLink`,`ShowEmail`,`ShowLocale`,
-    `BackgroundType`,`BackgroundColor`,`BackgroundColor2`,`BackgroundImage`
+    `BackgroundType`,`BackgroundColor`,`BackgroundColor2`,`BGFilePath`, `BackgroundImage`
   FROM `wtkUsers`
 WHERE `UID` = :UserUID
 SQLVAR;
@@ -70,7 +70,7 @@ $pgHtm .= wtkFormText('wtkUsers', 'City');
 $pgSQL  = "SELECT `LookupValue`, `LookupDisplay` FROM `wtkLookups` WHERE `LookupType` = 'USAstate' ORDER BY `LookupValue` ASC";
 $pgHtm .= wtkFormSelect('wtkUsers', 'State', $pgSQL, [], 'LookupDisplay', 'LookupValue');
 
-$pgPhotoUpload = wtkFormFile('wtkUsers','FilePath','/imgs/user/','NewFileName','User Photo','m6 s12','myPhoto');
+$pgPhotoUpload = wtkFormFile('wtkUsers','FilePath','/imgs/user/','NewFileName','User Photo','m6 s12','myPhoto','N','accept="image/*"','Y',1);
 
 $pgHtm .=<<<htmVAR
                 </div>
@@ -128,7 +128,7 @@ $pgTmp = wtkReplace($pgTmp, 'type="text"','type="text" class="w72"');
 //$pgTmp  = wtkReplace($pgTmp, '<input type="text"','<input type="text" oninput="JavaScript:setCssRoot(this.id, this.jscolor)"');
 $pgHtm .= $pgTmp;
 
-$pgTmp = wtkFormFile('wtkUsers','FilePath','/imgs/background/','BackgroundImage','Background Image','m6 s12','','N','accept="image/*"','Y',2);
+$pgTmp = wtkFormFile('wtkUsers','BGFilePath','/imgs/background/','BackgroundImage','Background Image','m6 s12','','N','accept="image/*"','Y',2);
 
 $pgTmp = wtkReplace($pgTmp, 'class="input-field col m6','id="bkImg" class="input-field col m6');
 if ($pgBackgroundType != 'I'):
@@ -140,7 +140,6 @@ $pgHtm .= wtkFormHidden('wtkfImgWidth', 300);
 $pgHtm .= wtkFormHidden('wtkfImgHeight', 300);
 $pgHtm .= wtkFormHidden('ID1', $gloId);
 $pgHtm .= wtkFormHidden('UID', wtkEncode('UID'));
-$pgHtm .= wtkFormHidden('HasSelect', 'Y');
 $pgHtm .= wtkFormHidden('wtkMode', $gloWTKmode);
 $pgHtm .= wtkFormHidden('wtkGoToURL', '../../login/user.php');
 $pgHtm .= wtkFormWriteUpdField();
@@ -236,6 +235,7 @@ $pgHtm .=<<<htmVAR
                 </div>
             </div>
         </div>
+        <br>
     </div>
 </div>
 htmVAR;

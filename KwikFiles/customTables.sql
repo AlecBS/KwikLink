@@ -47,7 +47,8 @@ ALTER TABLE `wtkUsers`
     ADD `BackgroundType` char(1) DEFAULT 'N' AFTER `ShowLocale`,
     ADD `BackgroundColor` char(7) DEFAULT NULL AFTER `BackgroundType`,
     ADD `BackgroundColor2` char(7) DEFAULT NULL AFTER `BackgroundColor`,
-    ADD `BackgroundImage` char(12) DEFAULT NULL AFTER `BackgroundColor2`;
+    ADD `BackgroundImage` char(12) DEFAULT NULL AFTER `BackgroundColor2`,
+    ADD `BGFilePath` char(30) DEFAULT NULL AFTER `BackgroundImage`;
 
 ALTER TABLE `wtkUsers` CHANGE `BackgroundType`
   `BackgroundType` CHAR(1) DEFAULT 'N' COMMENT 'None, Color, Gradient, Image';
@@ -58,7 +59,6 @@ ALTER TABLE `wtkUsers` CHANGE `BackgroundColor2`
 ALTER TABLE `wtkUsers` ADD `FullName` varchar(120) NULL DEFAULT NULL AFTER `LastName`;
 
 INSERT INTO `wtkPages` (`PageName`,`Path`, `FileName`) VALUES ('Social Media', '/admin/', 'socialSiteList');
-
 
 INSERT INTO `SocialSites` (`WebsiteName`, `ButtonColor`, `IconHTML`) VALUES
 ('LinkedIn', 'blue darken-3', '<i class=\"fab fa-linkedin\"></i>'),
@@ -98,3 +98,6 @@ CREATE TRIGGER `tib_UserLinks`
     SET NEW.`Priority` = (fncLastPriority + 10);
 END
 $$
+
+-- script for testing image uploads
+SELECT `UID`, `FilePath`,`NewFileName`,`BGFilePath`,`BackgroundImage` FROM `wtkUsers`;
