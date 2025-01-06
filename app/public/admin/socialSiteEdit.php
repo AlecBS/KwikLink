@@ -25,9 +25,9 @@ $pgHtm =<<<htmVAR
             <div class="row">
 htmVAR;
 
-$pgHtm .= wtkFormText('SocialSites', 'WebsiteName','text','','m4 s12');
+$pgHtm .= wtkFormText('SocialSites', 'WebsiteName','text','','m3 s12');
 $pgHtm .= wtkFormText('SocialSites', 'ButtonColor','text','','m4 s12');
-$pgTmp  = wtkFormText('SocialSites', 'IconHTML','text','','m4 s12');
+$pgTmp  = wtkFormText('SocialSites', 'IconHTML','text','','m5 s12');
 $pgHtm .= wtkReplace($pgTmp, 'Icon H T M L','Icon HTML');
 
 $pgHtm .= wtkFormHidden('ID1', $gloId);
