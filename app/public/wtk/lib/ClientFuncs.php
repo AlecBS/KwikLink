@@ -75,7 +75,6 @@ function wtkNavBar($fncHeader){
 				</div>
 			</li>
 			<li><a class="sidenav-close" onclick="Javascript:goHome();"><i class="material-icons">dashboard</i>Dashboard</a></li>
-            <li><a class="sidenav-close" onclick="Javascript:ajaxGo('/login/user');"><i class="material-icons">account_box</i>My Profile</a></li>
 			<li><a class="sidenav-close" onclick="Javascript:showBugReport();"><i class="material-icons">bug_report</i>Report Bug</a></li>
 			<li><a class="sidenav-close" onclick="Javascript:wtkLogout();"><i class="material-icons">close</i>Log Out</a></li>
 		</ul>
