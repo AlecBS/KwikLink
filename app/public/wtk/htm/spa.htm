@@ -104,7 +104,11 @@
 		</div><!-- endloginMidBox -->
 	</div><!-- end sign in -->
 	<div id="mainPage" class="hide">@wtkContent@</div>
-	<div id="dashboard" class="hide">
+	<div id="dashboard" class="hide row">
+		<div id="myCardDIV" class="col m6 s12 center">card goes here</div>
+		<div id="myStatsDIV" class="col m6 s12 center">
+			<br><br><a class="btn" onclick="JavaScript:ajaxGo('/login/userEdit')">Update Card</a>
+		</div>
 		<div id="widgetDIV"></div>
 	</div>
 

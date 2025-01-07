@@ -141,7 +141,8 @@ $pgHtm .= wtkFormHidden('wtkfImgHeight', 300);
 $pgHtm .= wtkFormHidden('ID1', $gloId);
 $pgHtm .= wtkFormHidden('UID', wtkEncode('UID'));
 $pgHtm .= wtkFormHidden('wtkMode', $gloWTKmode);
-$pgHtm .= wtkFormHidden('wtkGoToURL', '../../login/user.php');
+//$pgHtm .= wtkFormHidden('wtkGoToURL', '../../login/user.php');
+$pgHtm .= wtkFormHidden('wtkGoToURL', 'dashboard');
 $pgHtm .= wtkFormWriteUpdField();
 
 $pgHtm .=<<<htmVAR

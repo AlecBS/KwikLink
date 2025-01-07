@@ -18,21 +18,7 @@
 	<script type="text/javascript" src="/wtk/js/materialize.min.js" defer></script>
 </head>
 <body onload="Javascript:wtkStartMaterializeCSS()">
-<div class="card b-shadow" style="max-width:450px;margin:auto">
-	@UserWithPhoto@
-	<div class="card-content">
-		@UserWithoutPhoto@
-		@ShowEmail@
-		@Location@
-		<br>
-		<div class="row">
-			@AddressVCard@
-			@CalendarLink@
-		</div>
-		@WebsiteLinks@
-		@SocialMedia@
-	</div>
-</div>
+@CardMain@
 <div id="loaderDiv1" class="wrapper-load active">
 	<div id="loaderDiv2" class="preloader-wrapper big">
 		<div class="spinner-layer spinner-custom">

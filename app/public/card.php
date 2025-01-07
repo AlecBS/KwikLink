@@ -1,7 +1,9 @@
 <?php
 $gloLoginRequired = false;
 require('wtk/wtkLogin.php');
+
 $gloId = wtkGetParam('id',1);
+$pgFrom = wtkGetParam('p');
 
 $pgSQL =<<<SQLVAR
 SELECT COALESCE(`FullName`,'') AS `UserName`,
@@ -36,7 +38,14 @@ $pgBackgroundColor = wtkSqlValue('BackgroundColor');
 $pgBackgroundColor2 = wtkSqlValue('BackgroundColor2');
 $pgBackgroundImage = wtkSqlValue('BackgroundImage');
 
-$pgTmp = wtkLoadInclude('login/card.htm');
+$pgCMain = wtkLoadInclude('login/cardMain.htm');
+if ($pgFrom == 'dashboard'):
+    $pgTmp = $pgCMain;
+else:
+    $pgFrame = wtkLoadInclude('login/cardFrame.htm');
+    $pgTmp = wtkReplace($pgFrame, '@CardMain@', $pgCMain);
+endif;
+
 if ($pgPhoto == ''):
     $pgTmp = wtkReplace($pgTmp, '@UserPhoto@', '');
     $pgTmp = wtkReplace($pgTmp, '@UserWithPhoto@','');
@@ -148,8 +157,12 @@ switch ($pgBackgroundType):
 }
 </style>
 htmVAR;
-        $pgTmp = wtkReplace($pgTmp, 'class="card b-shadow"','class="card b-shadow my-bkgrnd "');
-        $pgTmp = wtkReplace($pgTmp, '</head>', $pgCSS . '</head>');
+        $pgTmp = wtkReplace($pgTmp, 'class="card b-shadow','class="card b-shadow my-bkgrnd ');
+        if ($pgFrom == 'dashboard'):
+            $pgTmp = $pgCSS . $pgTmp;
+        else:
+            $pgTmp = wtkReplace($pgTmp, '</head>', $pgCSS . '</head>');
+        endif;
         break;
     case 'I': // Image background
         $pgCSS =<<<htmVAR
@@ -182,7 +195,11 @@ htmVAR;
 htmVAR;
         $pgTmp = wtkReplace($pgTmp, '<div class="card-content">','<div class="my-bkgrnd"><div class="card-content">');
         $pgTmp = wtkReplace($pgTmp, '@SocialMedia@','@SocialMedia@' . "\n" . '</div>');
-        $pgTmp = wtkReplace($pgTmp, '</head>', $pgCSS . '</head>');
+        if ($pgFrom == 'dashboard'):
+            $pgTmp = $pgCSS . $pgTmp;
+        else:
+            $pgTmp = wtkReplace($pgTmp, '</head>', $pgCSS . '</head>');
+        endif;
         break;
     default: // 'N': // none
         // /do nothing
