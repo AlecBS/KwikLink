@@ -700,6 +700,15 @@ function pageTransition(fncFrom, fncTo, fncPage = ''){
     if ((fncFrom == 'dashboard') && (fncTo == 'dashboard')){
         fncFrom = 'mainPage';
     }
+    if (fncTo == 'dashboard'){
+        const fncTopOfPage = document.getElementById('myNavbar');
+        if (fncTopOfPage) {
+            setTimeout(function () {
+                fncTopOfPage.scrollIntoView({ behavior: 'smooth' });
+                wtkDebugLog('pageTransition: scroll to myNavbar');
+            }, 360);
+        }
+    }
     if ((fncFrom == 'mainPage') && (fncTo == 'mainPage')){
         pgMainPage = '... loading ...';
         wtkDebugLog('pageTransition: pgMainPage = ' + pgMainPage);

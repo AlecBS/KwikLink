@@ -220,12 +220,16 @@ $pgSocialBtns = '';
 $pgPDO = $gloWTKobjConn->prepare($pgSQL);
 $pgPDO->execute($pgSqlFilter);
 while ($gloPDOrow = $pgPDO->fetch(PDO::FETCH_ASSOC)):
-    $pgSocialBtns .= $gloPDOrow['Button'];
+    $pgSocialBtns .= $gloPDOrow['Button'] . "\n";
 endwhile;
 unset($pgPDO);
 if ($pgSocialBtns != ''):
-    $pgSocialBtns = '<br><small>Social Profile</small><br>' . $pgSocialBtns . '<br>';
+    $pgSocialBtns = '<br><small>Social Profile</small><br>' . $pgSocialBtns;
 endif;
+$pgSocialBtns .= '<a onclick="JavaScript:ajaxGo(\'/login/showQRcode\',' . $gloId . ')"';
+$pgSocialBtns .= 'class="btn-floating black right">';
+$pgSocialBtns .= '<img src="/imgs/qr_code.svg" style="margin-top:7px"></a>';
+$pgSocialBtns .= "\n" . '<br>' . "\n";
 $pgTmp = wtkReplace($pgTmp, '@SocialMedia@', $pgSocialBtns);
 //  END  Social Links
 
