@@ -227,7 +227,7 @@ if ($pgSocialBtns != ''):
     $pgSocialBtns = '<br><small>Social Profile</small><br>' . $pgSocialBtns;
 endif;
 $pgSocialBtns .= '<a onclick="JavaScript:ajaxGo(\'/login/showQRcode\',' . $gloId . ')"';
-$pgSocialBtns .= 'class="btn-floating black right">';
+$pgSocialBtns .= ' class="btn-floating black right">';
 $pgSocialBtns .= '<img src="/imgs/qr_code.svg" style="margin-top:7px"></a>';
 $pgSocialBtns .= "\n" . '<br>' . "\n";
 $pgTmp = wtkReplace($pgTmp, '@SocialMedia@', $pgSocialBtns);
@@ -261,5 +261,8 @@ endif;
 $pgTmp = wtkReplace($pgTmp, '@WebsiteLinks@', $pgWebsites);
 //  END  UserWebsites
 
+if ($pgFrom != 'dashboard'):
+    wtkTrackVisitor('KwikCard','',$gloId);
+endif;
 echo $pgTmp;
 ?>

@@ -58,6 +58,9 @@ ALTER TABLE `wtkUsers` CHANGE `BackgroundColor2`
 
 ALTER TABLE `wtkUsers` ADD `FullName` varchar(120) NULL DEFAULT NULL AFTER `LastName`;
 
+ALTER TABLE `wtkVisitors`
+    ADD `KwikUserUID` char(30) DEFAULT NULL AFTER `ReferDomain`;
+
 INSERT INTO `wtkPages` (`PageName`,`Path`, `FileName`) VALUES ('Social Media', '/admin/', 'socialSiteList');
 
 INSERT INTO `SocialSites` (`WebsiteName`, `ButtonColor`, `IconHTML`) VALUES
