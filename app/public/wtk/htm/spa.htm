@@ -93,7 +93,7 @@
 						</li>
 					</ul>
 					<div style="max-width: 144px" class="hide">
-							<select id="selLangList" onchange="JavaScript:wtkLangUpdate(this.value)">
+						<select id="selLangList" onchange="JavaScript:wtkLangUpdate(this.value)">
 							<option value="eng">English</option>
 							<option value="esp">Espa&ntilde;ol</option>
 							<option value="hin">हिन्दी</option>
@@ -105,7 +105,9 @@
 	</div><!-- end sign in -->
 	<div id="mainPage" class="hide">@wtkContent@</div>
 	<div id="dashboard" class="hide row">
-		<div id="myCardDIV" class="col m6 s12 center">card goes here</div>
+		<div class="col m6 s12 center">
+			<div id="myCardDIV">card goes here</div>
+		</div>
 		<div id="myStatsDIV" class="col m4 offset-m1 s12 center">
 			<br><br><a class="btn" onclick="JavaScript:ajaxGo('/login/userEdit')">Update Card</a>
 		</div>

@@ -40,7 +40,12 @@ $pgBackgroundImage = wtkSqlValue('BackgroundImage');
 
 $pgCMain = wtkLoadInclude('login/cardMain.htm');
 if ($pgFrom == 'dashboard'):
-    $pgTmp = $pgCMain;
+    $pgTmp =<<<htmVAR
+    <p>share your public KwikLink<br>
+        <a href="card.php?id=$gloId" target="_blank">$gloWebBaseURL/card.php?id=$gloId</a>
+    </p>
+    $pgCMain
+htmVAR;
 else:
     $pgFrame = wtkLoadInclude('login/cardFrame.htm');
     $pgTmp = wtkReplace($pgFrame, '@CardMain@', $pgCMain);
@@ -260,6 +265,14 @@ if ($pgWebsites != ''):
 endif;
 $pgTmp = wtkReplace($pgTmp, '@WebsiteLinks@', $pgWebsites);
 //  END  UserWebsites
+
+// BEGIN Enhance UI for phones
+if ($gloDeviceType == 'phone'):
+    $pgTmp = wtkReplace($pgTmp, '<body onload','<body class="my-bkgrnd" onload');
+    $pgTmp = wtkReplace($pgTmp, 'max-width:450px;margin:auto','box-shadow:initial;background:initial;max-width:450px;margin:auto');
+endif;
+
+//  END  Enhance UI for phones
 
 if ($pgFrom != 'dashboard'):
     wtkTrackVisitor('KwikCard','',$gloId);
