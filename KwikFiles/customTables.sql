@@ -81,6 +81,7 @@ INSERT INTO `SocialSites` (`WebsiteName`, `ButtonColor`, `IconHTML`) VALUES
 ('reddit', 'deep-orange accent-3', '<i class=\"fab fa-reddit-alien\"></i>'),
 ('Snapchat', 'yellow accent-2', '<i class=\"fa-brands fa-snapchat black-text\"></i>');
 
+DELIMITER $$
 -- SQL Trigger for Priority defaulting based on UserUID
 CREATE TRIGGER `tib_UserLinks`
     BEFORE INSERT ON `UserLinks`
@@ -101,6 +102,8 @@ CREATE TRIGGER `tib_UserLinks`
     SET NEW.`Priority` = (fncLastPriority + 10);
 END
 $$
+
+DELIMITER ;
 
 -- script for testing image uploads
 SELECT `UID`, `FilePath`,`NewFileName`,`BGFilePath`,`BackgroundImage` FROM `wtkUsers`;
