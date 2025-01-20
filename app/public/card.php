@@ -1,8 +1,19 @@
 <?php
-$gloLoginRequired = false;
+function wtkGetTopPost($fncParameter, $fncDefault = '') {
+    $fncResult = isset($_POST[$fncParameter]) ? $_POST[$fncParameter] : '';
+    if ($fncResult == ''):
+        $fncResult = $fncDefault;
+    endif;
+    return $fncResult;
+} // end of wtkGetPost
+if (wtkGetTopPost('p') == 'dashboard'): // called from dashboard
+    $pgSecurityLevel = 1;
+else:
+    $gloLoginRequired = false;
+endif;
 require('wtk/wtkLogin.php');
 
-$gloId = wtkGetParam('id',1);
+$gloId = wtkGetParam('id',$gloUserUID);
 $pgFrom = wtkGetParam('p');
 
 $pgSQL =<<<SQLVAR
@@ -271,7 +282,6 @@ if ($gloDeviceType == 'phone'):
     $pgTmp = wtkReplace($pgTmp, '<body onload','<body class="my-bkgrnd" onload');
     $pgTmp = wtkReplace($pgTmp, 'max-width:450px;margin:auto','box-shadow:initial;background:initial;max-width:450px;margin:auto');
 endif;
-
 //  END  Enhance UI for phones
 
 if ($pgFrom != 'dashboard'):
