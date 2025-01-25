@@ -17,7 +17,7 @@ $pgName = wtkSqlValue('Name');
 $pgTitle = wtkSqlValue('Title');
 $pgFilePath = wtkSqlValue('FilePath');
 $pgNewFileName = wtkSqlValue('NewFileName');
-$pgPhoto = $pgFilePath . $pgNewFileName;
+$pgPhoto = '..' . $pgFilePath . $pgNewFileName;
 $pgCellPhone = wtkSqlValue('CellPhone');
 $pgAddress = wtkSqlValue('Address');
 $pgAddress2 = wtkSqlValue('Address2');
@@ -74,7 +74,6 @@ unset($pgPDO);
 //  END  Loop through and get websites
 
 if ($pgPhoto != ''):
-    $pgPhoto        = substr($pgPhoto,1);
     $pgPhotoContent = file_get_contents($pgPhoto);
     $pgB64vCard     = base64_encode($pgPhotoContent);
     $pgB64mLine     = chunk_split($pgB64vCard,74,"\n");
