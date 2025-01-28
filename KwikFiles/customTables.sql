@@ -103,6 +103,26 @@ CREATE TRIGGER `tib_UserLinks`
 END
 $$
 
+CREATE TRIGGER `tib_UserWebsites`
+    BEFORE INSERT ON `UserWebsites`
+    FOR EACH ROW
+  BEGIN
+    DECLARE fncLastPriority SMALLINT;
+
+    SELECT COUNT(*) INTO fncLastPriority
+      FROM `UserWebsites`
+    WHERE `UserUID` = NEW.`UserUID`;
+
+    IF (fncLastPriority > 0) THEN
+        SELECT `Priority` INTO fncLastPriority
+          FROM `UserWebsites`
+        WHERE `UserUID` = NEW.`UserUID`
+        ORDER BY `Priority` DESC LIMIT 1;
+    END IF;
+    SET NEW.`Priority` = (fncLastPriority + 10);
+END
+$$
+
 DELIMITER ;
 
 -- script for testing image uploads
