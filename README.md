@@ -1,6 +1,10 @@
 # KwikLink
 Similar to LinkTree, this is a build-in-public project built using Wizard's Toolkit.
 
+Videos were created showing exactly how this was built:
+
+https://www.youtube.com/playlist?list=PL-ggE-fPIdy76ND6bL9bxUJtS_QOAp_--
+
 ## Docker Setup
 
 First step is to download the Wizard's Toolkit Docker environment at:
