@@ -25,9 +25,10 @@ https://github.com/AlecBS/WizardsToolkit
 Once downloaded and installed, you can find additional information here:
 
 <p align="center">
-  <a href="https://wizardstoolkit.com/docs/">Documentation</a>
-  <a href="https://wizardstoolkit.com/tutorials.htm">Tutorials</a>
   <a href="https://wizardstoolkit.com/wtk.php">Live Demo</a>
+  <a href="https://wizardstoolkit.com/tutorials.php">Tutorials</a>
+  <a href="https://wizardstoolkit.com/docs/">Documentation</a>
+  <a href="https://wizardstoolkit.com/wiki/">Wiki</a>
 </p>
 
 **After Database Created**
