@@ -380,6 +380,7 @@ function wtkRegister() {
                               $('body').removeClass('bg-second');
                               pgPageArray.push('0~0~newRegOK');
                               waitLoad('off');
+                              afterPageLoad();
                               $('#backBtn').addClass('hide');
                               $('#myNavbar').removeClass('hide');
                               $('#myPassword').val(fncPW);

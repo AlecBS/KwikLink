@@ -178,20 +178,6 @@ WHERE ul.`UserUID` = :UserUID
 ORDER BY ul.`Priority` ASC
 SQLVAR;
 
-$pgHtm .=<<<htmVAR
-<input type="hidden" id="wtkDragTable" value="UserLinks">
-<input type="hidden" id="wtkDragLocation" value="table">
-<input type="hidden" id="wtkDragColumn" value="Priority">
-<input type="hidden" id="wtkDragRefresh" value="/login/socialList">
-<input type="hidden" id="wtkDragFilter" value="">
-
-<input type="hidden" id="wtkDragTable2" value="UserWebsites">
-<input type="hidden" id="wtkDragLocation2" value="table">
-<input type="hidden" id="wtkDragColumn2" value="Priority">
-<input type="hidden" id="wtkDragRefresh2" value="/login/websiteList">
-<input type="hidden" id="wtkDragFilter2" value="">
-htmVAR;
-
 $gloEditPage = 'login/socialEdit';
 $gloAddPage  = $gloEditPage;
 $gloDelPage  = 'UserLinks';
@@ -245,6 +231,20 @@ $pgHtm .=<<<htmVAR
         <br>
     </div>
 </div>
+htmVAR;
+
+$pgHtm .=<<<htmVAR
+<input type="hidden" id="wtkDragTable" value="UserLinks">
+<input type="hidden" id="wtkDragLocation" value="table">
+<input type="hidden" id="wtkDragColumn" value="Priority">
+<input type="hidden" id="wtkDragRefresh" value="/login/socialList">
+<input type="hidden" id="wtkDragFilter" value="">
+
+<input type="hidden" id="wtkDragTable2" value="UserWebsites">
+<input type="hidden" id="wtkDragLocation2" value="table">
+<input type="hidden" id="wtkDragColumn2" value="Priority">
+<input type="hidden" id="wtkDragRefresh2" value="/login/websiteList">
+<input type="hidden" id="wtkDragFilter2" value="">
 htmVAR;
 
 $pgHtm .= '            </div><br>' . "\n";
