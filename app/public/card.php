@@ -17,14 +17,19 @@ $gloId = wtkGetParam('id',$gloUserUID);
 $pgFrom = wtkGetParam('p');
 
 $pgSQL =<<<SQLVAR
-SELECT COALESCE(`FullName`,'') AS `UserName`,
-    `Title`, `FilePath`, `NewFileName`,`CellPhone`,`Email`,
-    `Address`, `Address2`, `City`, `State`, `Zipcode`,
-    `PersonalURL`, `ShowAddressLink`,`ShowEmail`,`ShowLocale`,
-    `BackgroundType`,`BackgroundColor`,`BackgroundColor2`,`BackgroundImage`
-FROM `wtkUsers`
-WHERE `UID` = :UserUID
+SELECT COALESCE(u.`FullName`,'') AS `UserName`,
+    u.`Title`, u.`FilePath`, u.`NewFileName`, u.`CellPhone`,u.`Email`,
+    u.`Address`, u.`Address2`, u.`City`, u.`State`, u.`Zipcode`,
+    u.`PersonalURL`, u.`ShowAddressLink`, u.`ShowEmail`, u.`ShowLocale`,
+    u.`BackgroundType`, u.`BackgroundColor`, u.`BackgroundColor2`, u.`BackgroundImage`,
+    b.`SocialUID`, b.`SocialLink`
+FROM `wtkUsers` u
+  LEFT OUTER JOIN `UserLinks` b ON b.`UserUID` = u.`UID`
+        AND b.`SocialUID` IN (4,7)
+WHERE u.`UID` = :UserUID
+ORDER BY b.`SocialUID` ASC LIMIT 1
 SQLVAR;
+// if have Twitter and BlueSky, pick Twitter handle
 $pgSqlFilter = array('UserUID' => $gloId);
 wtkSqlGetRow(wtkSqlPrep($pgSQL), $pgSqlFilter);
 
@@ -59,7 +64,40 @@ if ($pgFrom == 'dashboard'):
 htmVAR;
 else:
     $pgFrame = wtkLoadInclude('login/cardFrame.htm');
-    $pgTmp = wtkReplace($pgFrame, '@CardMain@', $pgCMain);
+    // BEGIN Social Media meta tags
+    $pgMyURL = $gloWebBaseURL . '/card.php?id=' . $gloId;
+    $pgSocialUID = wtkSqlValue('SocialUID');
+    $pgTwitterAcct = wtkSqlValue('SocialLink');
+    $pgOGDescription = ''; // wtkSqlValue('OGDescription'); future enhancement
+    $pgOGtags  = '<meta property="og:url" content="' . $pgMyURL . '" />' . "\n";
+    $pgOGtags .= '<meta property="og:type" content="website" />' . "\n";
+    if ($pgTwitterAcct != ''):
+        if ($pgSocialUID == 4):
+            if (substr($pgTwitterAcct,0,1) != '@'):
+                $pgTwitterAcct = '@' . $pgTwitterAcct;
+            endif;
+        else: // BlueSky
+            $pgTwitterAcct = wtkReplace($pgTwitterAcct, 'https://bsky.app/profile/','');
+        endif;
+        $pgOGtags .= '<meta name="twitter:site" content="' . $pgTwitterAcct . '" />' . "\n";
+        $pgOGtags .= '<meta name="twitter:creator" content="' . $pgTwitterAcct . '" />' . "\n";
+//      $pgOGtags .= '<meta name="twitter:card" content="summary_large_image" />' . "\n";
+        $pgOGtags .= '<meta name="twitter:description" content="' . $pgTitle . '" />' . "\n";
+    endif;
+    if ($pgTitle != ''):
+        $pgOGtags .= '<meta property="og:title" content="' . $pgUserName . '" />' . "\n";
+    endif;
+    if ($pgOGDescription != ''):
+        $pgOGDescription = wtkReplace($pgOGDescription, '"',"'");
+        $pgOGtags .= '<meta name="description" property="og:description" content="' . $pgTitle . '" />' . "\n";
+    endif;
+    if ($pgPhoto != ''):
+        $pgOGtags .= '<meta property="og:image" content="' . $gloWebBaseURL . $pgPhoto . '" />' . "\n";
+    endif;
+    $pgTmp = wtkReplace($pgFrame, '@OGtags@', $pgOGtags);
+    //  END  Social Media meta tags
+
+    $pgTmp = wtkReplace($pgTmp, '@CardMain@', $pgCMain);
 endif;
 
 if ($pgPhoto == ''):
