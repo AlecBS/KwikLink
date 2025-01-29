@@ -39,6 +39,7 @@ $pgPhone       = wtkGetParam('wtkwtkUsersPhone');
 wtkBuildInsertSQL('wtkUsers', 'LoginCode', $pgLoginCode);
 wtkBuildInsertSQL('wtkUsers', 'FirstName', $pgFirstName);
 wtkBuildInsertSQL('wtkUsers', 'LastName', $pgLastName);
+wtkBuildInsertSQL('wtkUsers', 'FullName', $pgFirstName . ' ' . $pgLastName);
 wtkBuildInsertSQL('wtkUsers', 'Email', $pgEmail);
 if ($pgPhone != ''):
     wtkBuildInsertSQL('wtkUsers', 'Phone', $pgPhone);
