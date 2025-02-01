@@ -31,6 +31,13 @@ Once downloaded and installed, you can find additional information here:
   <a href="https://wizardstoolkit.com/wiki/">Wiki</a>
 </p>
 
+**Docker Option**
+
+If you are using Docker installation of Wizard's Toolkit, you may want to use the
+docker-compose.yml that comes with KwikLink.  It is exactly the same except for the
+container names so it will not conflict with other Wizard Toolkit Docker projects
+you may be working on.
+
 **After Database Created**
 
 The final step for Wizard's Toolkit is to create the database and insert initial data.
