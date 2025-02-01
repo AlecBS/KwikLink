@@ -280,7 +280,12 @@ unset($pgPDO);
 if ($pgSocialBtns != ''):
     $pgSocialBtns = '<br><small>Social Profile</small><br>' . $pgSocialBtns;
 endif;
-$pgSocialBtns .= '<a onclick="JavaScript:ajaxGo(\'/login/showQRcode\',' . $gloId . ')"';
+
+if ($pgFrom == 'dashboard'):
+    $pgSocialBtns .= '<a onclick="JavaScript:ajaxGo(\'/login/showQRcode\',' . $gloId . ')"';
+else:
+    $pgSocialBtns .= '<a href="/login/showQRcode.php?id=' . $gloId . '"';
+endif;
 $pgSocialBtns .= ' class="btn-floating black right">';
 $pgSocialBtns .= '<img src="/imgs/qr_code.svg" style="margin-top:7px"></a>';
 $pgSocialBtns .= "\n" . '<br>' . "\n";
@@ -321,6 +326,16 @@ if ($gloDeviceType == 'phone'):
     $pgTmp = wtkReplace($pgTmp, 'max-width:450px;margin:auto','box-shadow:initial;background:initial;max-width:450px;margin:auto');
 endif;
 //  END  Enhance UI for phones
+
+$pgPaidAccount = 'N'; // 2ENHANCE when have Premium offering, they do not have footer shown
+if (($pgPaidAccount == 'N') && ($pgFrom != 'dashboard')):
+    $pgFooter =<<<htmVAR
+    <div class="card-action black" style="line-height:9px">
+      <a href="/" style="text-transform: lowercase;">make your own KwikLink card</a>
+    </div>
+htmVAR;
+    $pgTmp = wtkReplace($pgTmp, '<!--@Footer@-->',$pgFooter);
+endif;
 
 if ($pgFrom != 'dashboard'):
     wtkTrackVisitor('KwikCard','',$gloId);
