@@ -6,7 +6,20 @@ if (!isset($gloConnected)):
 endif;
 $gloSkipFooter = true;
 
-$pgSQL =<<<SQLVAR
+if ($gloDeviceType == 'phone'):
+    $pgSQL =<<<SQLVAR
+SELECT `UID`,
+    CONCAT('<a draggable="true" ondragstart="wtkDragStart(', `UID`,
+        ',', ROW_NUMBER() OVER(ORDER BY `Priority`),');" ondrop="wtkDropId(', `UID`,
+        ',', ROW_NUMBER() OVER(ORDER BY `Priority`),',2)" ondragover="wtkDragOver(event)" class="btn btn-floating ">',
+        '<i class="material-icons" alt="drag to change priorty" title="drag to change priorty">drag_handle</i></a>')
+        AS `Prioritize`, `WebsiteName`
+  FROM `UserWebsites`
+WHERE `UserUID` = :UserUID
+ORDER BY `Priority` ASC
+SQLVAR;
+else: // not phone
+    $pgSQL =<<<SQLVAR
 SELECT `UID`,
     CONCAT('<a draggable="true" ondragstart="wtkDragStart(', `UID`,
         ',', ROW_NUMBER() OVER(ORDER BY `Priority`),');" ondrop="wtkDropId(', `UID`,
@@ -18,6 +31,7 @@ SELECT `UID`,
 WHERE `UserUID` = :UserUID
 ORDER BY `Priority` ASC
 SQLVAR;
+endif;
 $pgSqlFilter = array('UserUID' => $gloUserUID);
 
 $gloEditPage = 'login/websiteEdit';
