@@ -1,18 +1,9 @@
 <?php
-function wtkGetTopPost($fncParameter, $fncDefault = '') {
-    $fncResult = isset($_POST[$fncParameter]) ? $_POST[$fncParameter] : '';
-    if ($fncResult == ''):
-        $fncResult = $fncDefault;
-    endif;
-    return $fncResult;
-} // end of wtkGetPost
-if (wtkGetTopPost('p') == 'dashboard'): // called from dashboard
-    $pgSecurityLevel = 1;
-else:
-    $gloLoginRequired = false;
+$pgSecurityLevel = 1;
+if (!isset($gloConnected)):
+    define('_RootPATH', '../');
+    require('../wtk/wtkLogin.php');
 endif;
-require('wtk/wtkLogin.php');
-
 $gloId = wtkGetParam('id',$gloUserUID);
 $pgFrom = wtkGetParam('p');
 
@@ -71,7 +62,7 @@ $pgBackgroundColor = wtkSqlValue('BackgroundColor');
 $pgBackgroundColor2 = wtkSqlValue('BackgroundColor2');
 $pgBackgroundImage = wtkSqlValue('BackgroundImage');
 
-$pgCMain = wtkLoadInclude('login/cardMain.htm');
+$pgCMain = wtkLoadInclude('cardMain.htm');
 if ($pgFrom == 'dashboard'):
     $pgTmp =<<<htmVAR
     <p>share your public KwikLink<br>
@@ -80,7 +71,7 @@ if ($pgFrom == 'dashboard'):
     $pgCMain
 htmVAR;
 else:
-    $pgFrame = wtkLoadInclude('login/cardFrame.htm');
+    $pgFrame = wtkLoadInclude('cardFrame.htm');
     // BEGIN Social Media meta tags
     $pgMyURL = $gloWebBaseURL . '/card.php?id=' . $gloId;
     $pgSocialUID = wtkSqlValue('SocialUID');

@@ -1,70 +1,87 @@
 <?php
 $gloLoginRequired = false;
-require('wtk/wtkLogin.php');
-
-if ($gloCoName == 'Your Company Name'):
-    $gloCoName = wtkSqlGetOneResult('SELECT `CoName` FROM `wtkCompanySettings` WHERE `UID` = ?', [1]);
+if (!isset($gloConnected)):
+	require('wtk/wtkLogin.php');
 endif;
-
-wtkSearchReplace('<!-- @wtkMenu@ -->', wtkNavBar($gloCoName));
-// Or instead use data-driven Menu Bar:  wtkSearchReplace('<!-- @wtkMenu@ -->', wtkMenu('WTK-Admin'));
-
-$pgRememberMe = wtkGetCookie('rememberMe'); // 2ENHANCE save in phone storage
-if ($pgRememberMe == 'Y'):
-    $pgChecked = 'CHECKED';
-    $pgEmail = wtkDecode(wtkGetCookie('UserEmail'));
-    $pgPW = wtkDecode(wtkGetCookie('UserPW'));
-else:
-    $pgChecked = '';
-    $pgEmail = '';
-    $pgPW = '';
-endif;
-
-wtkSearchReplace('@myEmail@', $pgEmail);
-wtkSearchReplace('@myPW@', $pgPW);
-wtkSearchReplace('@rememberMe@', $pgChecked);
-if (wtkGetParam('App') == 'new'):
-    $pgReplace = '<p id="upgMsg" class="green-text">' . wtkLang('Thank you for upgrading to newest version!') . '</p>';
-    wtkSearchReplace('<div id="LoginErrMsg"></div>', '<div id="LoginErrMsg">' . $pgReplace . '</div>');
-endif;
-
-$pgHtm  = '';
-// $pgHtm .= wtkFormHidden('pgDebugVar', 'Y');  // uncomment to turn on JavaScript debugging
-$pgHtm .= wtkFormHidden('pgSiteVar', 'publicApp');
-
-$pgMobile = wtkGetParam('mobile');
-if ($pgMobile != ''): // this makes website work for iOS and Android apps; have Xcode point to this page ?mobile=ios
-    $pgHtm .= wtkFormHidden('AccessMethod', $pgMobile);
-    if ($pgMobile == 'ios'):
-        wtkSearchReplace('id="myNavbar"','id="myNavbar" style="margin-top:20px"');
-    endif;
-endif;
-
-if (($gloDeviceType == 'phone') || ($pgMobile == 'ios')):
-    wtkSearchReplace('id="loginPage" class="full-page valign-wrapper"','id="loginPage" class="white" style="height:100%"');
-    wtkSearchReplace('class="card b-shadow"','');
-    wtkSearchReplace('"bg-second"','""');
-    wtkSearchReplace('<form class="card-content">','<form class="container">');
-
-    wtkSearchReplace('id="forgotPW" class="hide full-page valign-wrapper"','id="forgotPW" class="hide"');
-    wtkSearchReplace('<div class="card-content"><p id="langForgotMsg">','<div class="container"><p id="langForgotMsg"><br>');
-
-    wtkSearchReplace('id="resetPWdiv" class="hide full-page valign-wrapper"','id="resetPWdiv" class="hide"');
-    wtkSearchReplace('<div class="card-content"><p id="langEmailMsg">','<div class="container"><p id="langEmailMsg"><br>');
-
-    wtkSearchReplace('id="registerPage" class="hide full-page valign-wrapper"','id="registerPage" class="hide"');
-    wtkSearchReplace('name="wtkRegisterForm" class="card-content">','name="wtkRegisterForm" class="container"><br>');
-    if ($pgMobile == ''):
-        $pgHtm .= wtkFormHidden('AccessMethod', 'pwa');
-    endif;
-else:
-    wtkSearchReplace('id="loginPage" class="full-page valign-wrapper">','id="loginPage" class="full-page"><br>');
-endif;
-
-$pgVersion = 2;
-wtkSearchReplace('wtkLibrary.js','wtkLibrary.js?v=' . $pgVersion);
-wtkSearchReplace('wtkUtils.js','wtkUtils.js?v=' . $pgVersion);
-wtkSearchReplace('wtkFileUpload.js','wtkFileUpload.js?v=' . $pgVersion);
-
-wtkMergePage($pgHtm, $gloCoName, 'wtk/htm/spa.htm');
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>@PageTitle@</title>
+	<link rel="stylesheet" href="/wtk/css/materialIcons.css"/>
+	<link rel="stylesheet" href="/wtk/css/materialize.min.css">
+	<link rel="stylesheet" href="/wtk/css/wtkBlue.css">
+	<link rel="stylesheet" href="/wtk/css/wtkLight.css">
+	<link rel="stylesheet" href="/wtk/css/wtkGlobal.css">
+	<link rel="shortcut icon" href="/imgs/favicon/favicon.ico" type="image/x-icon" />
+	<link rel="apple-touch-icon" href="/imgs/favicon/apple-touch-icon.png" />
+	<link rel="apple-touch-icon" sizes="57x57" href="/imgs/favicon/apple-touch-icon-57x57.png" />
+	<link rel="apple-touch-icon" sizes="72x72" href="/imgs/favicon/apple-touch-icon-72x72.png" />
+	<link rel="apple-touch-icon" sizes="76x76" href="/imgs/favicon/apple-touch-icon-76x76.png" />
+	<link rel="apple-touch-icon" sizes="114x114" href="/imgs/favicon/apple-touch-icon-114x114.png" />
+	<link rel="apple-touch-icon" sizes="120x120" href="/imgs/favicon/apple-touch-icon-120x120.png" />
+	<link rel="apple-touch-icon" sizes="144x144" href="/imgs/favicon/apple-touch-icon-144x144.png" />
+	<link rel="apple-touch-icon" sizes="152x152" href="/imgs/favicon/apple-touch-icon-152x152.png" />
+	<script type="text/javascript" src="/wtk/js/wtkUtils.js" defer></script>
+	<script type="text/javascript" src="/wtk/js/jquery.min.js" defer></script>
+	<script type="text/javascript" src="/wtk/js/materialize.min.js" defer></script>
+	<script type="text/javascript" src="/wtk/js/wtkPaths.js" defer></script>
+	<script type="text/javascript" src="/wtk/js/chart382.min.js" defer></script>
+	<script type="text/javascript" src="/wtk/js/wtkColors.js" defer></script>
+</head>
+<body class="bg-second" onload="JavaScript:wtkStartMaterializeCSS()">
+	<div id="mainPage"><br>
+		<div class="row"><div class="col m6 offset-m3 s12">
+            <br><br>
+			<div class="card b-shadow">
+				<div class="card-content"><br>
+    				<h2>Welcome to KwikLink!</h2>
+                    <br>
+                    <p>The marketing website will be built within the next week or two.
+                    Meanwhile feel free to create a free account, build your
+                    KwikLink card, and start sharing it.</p>
+                    <p>There will always be a free tier for KwikLink.
+                        In the near future we will have the ability to
+                        have a custom link to your card for a minor fee.</p>
+
+                    <p>Create an account or login
+                        <a href="/login/" class="btn b-shadow waves-effect waves-light">Here</a>
+                    </p>
+				</div>
+			</div>
+		</div></div>
+	</div>
+	<!-- preloader -->
+	<div id="loaderDiv1" class="wrapper-load active">
+		<div id="loaderDiv2" class="preloader-wrapper big">
+			<div class="spinner-layer spinner-custom">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+				<div class="gap-patch">
+					<div class="circle"></div>
+				</div>
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end preloader -->
+	<div id="modalAlert" class="modal">
+		<div class="modal-content card center">
+			<i id="modIcon" class="material-icons large red-text text-darken-1">warning</i>
+			<h4 id="modHdr">Oops!</h4>
+			<p id="modText"></p>
+			<a class="btn b-shadow center modal-close waves-effect" id="langClose">Close</a>
+		</div>
+	</div>
+	<div id="modalWTK" class="modal content"></div>
+	<script type="text/javascript" src="/wtk/js/wtkLibrary.js" defer></script>
+	<script type="text/javascript" src="/wtk/js/wtkClientVars.js" defer></script>
+	<script type="text/javascript" src="/wtk/js/wtkChart.js" defer></script>
+	<script type="text/javascript" src="/wtk/js/wtkFileUpload.js" defer></script>
+</body>
+</html>

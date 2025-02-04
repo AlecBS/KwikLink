@@ -14,26 +14,19 @@ services:
           - ./Mounts/mydata:/var/lib/mysql
     web:
         platform: linux/amd64
-        container_name: kwik_nginx
-        image: nginx:1.22.0-alpine
-        ports:
-            - '80:80'
-            - '443:443'
-        depends_on:
-            - wtk_db_mysql
-        volumes:
-            - ./nginx.conf:/etc/nginx/conf.d/nginx.conf
-            - ./app:/app
-    php:
-        platform: linux/amd64
-        container_name: kwik_php81
+        container_name: kwik_apache_php
         build:
-            context: .
-            dockerfile: PHP.Dockerfile
+          context: .
+          dockerfile: PHP.Dockerfile
+        ports:
+          - '80:80'
+          - '443:443'
         volumes:
-            - ./app:/app
+          - ./app/public:/var/www/html
+        depends_on:
+          - wtk_db_mysql
         env_file:
-            - ./phpMySQL.env
+          - ./phpMySQL.env
     phpmyadmin:
         image: phpmyadmin
         container_name: kwik_phpmyadmin

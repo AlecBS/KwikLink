@@ -42,6 +42,31 @@ if ($pgMobile != ''): // this makes website work for iOS and Android apps; have 
 endif;
 //wtkSearchReplace('wtkLight.css','wtkDark.css');
 
-wtkProtoType($pgHtm);
+if (($gloDeviceType == 'phone') || ($pgMobile == 'ios')):
+    wtkSearchReplace('id="loginPage" class="full-page valign-wrapper"','id="loginPage" class="white" style="height:100%"');
+    wtkSearchReplace('class="card b-shadow"','');
+    wtkSearchReplace('"bg-second"','""');
+    wtkSearchReplace('<form class="card-content">','<form class="container">');
+
+    wtkSearchReplace('id="forgotPW" class="hide full-page valign-wrapper"','id="forgotPW" class="hide"');
+    wtkSearchReplace('<div class="card-content"><p id="langForgotMsg">','<div class="container"><p id="langForgotMsg"><br>');
+
+    wtkSearchReplace('id="resetPWdiv" class="hide full-page valign-wrapper"','id="resetPWdiv" class="hide"');
+    wtkSearchReplace('<div class="card-content"><p id="langEmailMsg">','<div class="container"><p id="langEmailMsg"><br>');
+
+    wtkSearchReplace('id="registerPage" class="hide full-page valign-wrapper"','id="registerPage" class="hide"');
+    wtkSearchReplace('name="wtkRegisterForm" class="card-content">','name="wtkRegisterForm" class="container"><br>');
+    if ($pgMobile == ''):
+        $pgHtm .= wtkFormHidden('AccessMethod', 'pwa');
+    endif;
+else:
+    wtkSearchReplace('id="loginPage" class="full-page valign-wrapper">','id="loginPage" class="full-page"><br>');
+endif;
+
+$pgVersion = 4;
+wtkSearchReplace('wtkLibrary.js','wtkLibrary.js?v=' . $pgVersion);
+wtkSearchReplace('wtkUtils.js','wtkUtils.js?v=' . $pgVersion);
+wtkSearchReplace('wtkFileUpload.js','wtkFileUpload.js?v=' . $pgVersion);
+
 wtkMergePage($pgHtm, $gloCoName, '../wtk/htm/spa.htm');
 ?>

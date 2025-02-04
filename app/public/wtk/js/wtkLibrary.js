@@ -579,7 +579,7 @@ function getDashboardCounts() {
         if (pgSite == 'admin') {
             ajaxFillDiv('/wtk/widgets',0,'widgetDIV');
         } else { // main public site for KwikLink
-            ajaxFillDiv('/card','dashboard','myCardDIV');
+            ajaxFillDiv('/login/card','dashboard','myCardDIV');
             ajaxFillDiv('/login/myStats','dashboard','myStatsDIV');
         }
     }
