@@ -17,7 +17,7 @@ $gloId = wtkGetParam('id',$gloUserUID);
 $pgFrom = wtkGetParam('p');
 
 $pgSQL =<<<SQLVAR
-SELECT COALESCE(u.`FullName`,'') AS `UserName`,
+SELECT u.`UID`, COALESCE(u.`FullName`,'') AS `UserName`,
     u.`Title`, u.`FilePath`, u.`NewFileName`, u.`CellPhone`,u.`Email`,
     u.`Address`, u.`Address2`, u.`City`, u.`State`, u.`Zipcode`,
     u.`PersonalURL`, u.`ShowAddressLink`, u.`ShowEmail`, u.`ShowLocale`,
@@ -26,12 +26,29 @@ SELECT COALESCE(u.`FullName`,'') AS `UserName`,
 FROM `wtkUsers` u
   LEFT OUTER JOIN `UserLinks` b ON b.`UserUID` = u.`UID`
         AND b.`SocialUID` IN (4,7)
-WHERE u.`UID` = :UserUID
-ORDER BY b.`SocialUID` ASC LIMIT 1
 SQLVAR;
+
+$pgSlug = wtkGetParam('slug');
+if ($pgSlug == ''):
+    $pgSQL .= ' WHERE u.`UID` = :UserUID' . "\n";
+    $pgSqlFilter = array('UserUID' => $gloId);
+else:
+    $pgSQL .= ' WHERE u.`KwikSlug` = :slug' . "\n";
+    $pgSqlFilter = array('slug' => $pgSlug);
+endif;
+$pgSQL .= ' ORDER BY b.`SocialUID` ASC LIMIT 1';
+
 // if have Twitter and BlueSky, pick Twitter handle
-$pgSqlFilter = array('UserUID' => $gloId);
-wtkSqlGetRow(wtkSqlPrep($pgSQL), $pgSqlFilter);
+$pgResult = wtkSqlGetRow(wtkSqlPrep($pgSQL), $pgSqlFilter);
+
+if ($pgSlug != ''):
+    if ($pgResult == 'no data'):
+        require('index.php');
+        exit;
+    endif;
+    $gloId = wtkSqlValue('UID');
+    $pgSqlFilter = array('UserUID' => $gloId);
+endif;
 
 $pgUserName = wtkSqlValue('UserName');
 $pgTitle = wtkSqlValue('Title');

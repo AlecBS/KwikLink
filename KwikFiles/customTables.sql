@@ -125,5 +125,8 @@ $$
 
 DELIMITER ;
 
+ALTER TABLE `wtkUsers` ADD `KwikSlug` varchar(40) NULL;
+ALTER TABLE `wtkUsers` ADD UNIQUE `ix_wtkUsers_KwikSlug` (`KwikSlug`);
+
 -- script for testing image uploads
 SELECT `UID`, `FilePath`,`NewFileName`,`BGFilePath`,`BackgroundImage` FROM `wtkUsers`;
