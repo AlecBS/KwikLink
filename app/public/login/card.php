@@ -13,7 +13,7 @@ SELECT u.`UID`, COALESCE(u.`FullName`,'') AS `UserName`,
     u.`Address`, u.`Address2`, u.`City`, u.`State`, u.`Zipcode`,
     u.`PersonalURL`, u.`ShowAddressLink`, u.`ShowEmail`, u.`ShowLocale`,
     u.`BackgroundType`, u.`BackgroundColor`, u.`BackgroundColor2`, u.`BackgroundImage`,
-    b.`SocialUID`, b.`SocialLink`
+    b.`SocialUID`, b.`SocialLink`, u.`KwikSlug`
 FROM `wtkUsers` u
   LEFT OUTER JOIN `UserLinks` b ON b.`UserUID` = u.`UID`
         AND b.`SocialUID` IN (4,7)
@@ -61,19 +61,24 @@ $pgBackgroundType = wtkSqlValue('BackgroundType');
 $pgBackgroundColor = wtkSqlValue('BackgroundColor');
 $pgBackgroundColor2 = wtkSqlValue('BackgroundColor2');
 $pgBackgroundImage = wtkSqlValue('BackgroundImage');
+$pgKwikSlug = wtkSqlValue('KwikSlug');
+if ($pgKwikSlug != ''):
+    $pgMyURL = $gloWebBaseURL . '/' . $pgKwikSlug;
+else:
+    $pgMyURL = $gloWebBaseURL . '/card.php?id=' . $gloId;
+endif;
 
 $pgCMain = wtkLoadInclude('cardMain.htm');
 if ($pgFrom == 'dashboard'):
     $pgTmp =<<<htmVAR
     <p>share your public KwikLink<br>
-        <a href="/card.php?id=$gloId" target="_blank">$gloWebBaseURL/card.php?id=$gloId</a>
+        <span id="shareLink"><a href="$pgMyURL" target="_blank">$pgMyURL</a></span>
     </p>
     $pgCMain
 htmVAR;
 else:
     $pgFrame = wtkLoadInclude('cardFrame.htm');
     // BEGIN Social Media meta tags
-    $pgMyURL = $gloWebBaseURL . '/card.php?id=' . $gloId;
     $pgSocialUID = wtkSqlValue('SocialUID');
     $pgTwitterAcct = wtkSqlValue('SocialLink');
     $pgOGDescription = ''; // wtkSqlValue('OGDescription'); future enhancement

@@ -38,7 +38,7 @@ SQLVAR;
 endif;
 $pgSqlFilter = array('UserUID' => $gloUserUID);
 
-$gloEditPage = 'login/socialEdit';
+$gloEditPage = '/login/socialEdit';
 $gloAddPage  = $gloEditPage;
 $gloDelPage  = 'UserLinks';
 

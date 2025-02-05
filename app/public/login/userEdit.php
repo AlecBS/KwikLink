@@ -193,7 +193,7 @@ WHERE ul.`UserUID` = :UserUID
 ORDER BY ul.`Priority` ASC
 SQLVAR;
 endif;
-$gloEditPage = 'login/socialEdit';
+$gloEditPage = '/login/socialEdit';
 $gloAddPage  = $gloEditPage;
 $gloDelPage  = 'UserLinks';
 $gloSkipFooter = true;
@@ -245,7 +245,7 @@ ORDER BY `Priority` ASC
 SQLVAR;
 endif;
 
-$gloEditPage = 'login/websiteEdit';
+$gloEditPage = '/login/websiteEdit';
 $gloAddPage  = $gloEditPage;
 $gloDelPage  = 'UserWebsites';
 

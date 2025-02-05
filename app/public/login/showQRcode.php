@@ -9,25 +9,26 @@ if ($pgPassedId != ''):
 else:
 	$pgSecurityLevel = 1;
 endif;
-error_reporting(E_ALL | E_STRICT);
-ini_set('display_errors', 1);
 define('_RootPATH', '../');
 require('../wtk/wtkLogin.php');
-error_reporting(E_ALL | E_STRICT);
-ini_set('display_errors', 1);
-/*
+
+if ($gloLoginRequired != false):
+	$pgPassedId = $gloUserUID;
+endif;
+
 $pgSQL =<<<SQLVAR
-SELECT `PersonalURL`
+SELECT `KwikSlug`
  FROM `wtkUsers`
 WHERE `UID` = ?
 SQLVAR;
 $pgSQL = wtkSqlPrep($pgSQL);
-$pgURL = wtkSqlGetOneResult($pgSQL, [$gloUserUID]);
-*/
-if ($gloLoginRequired != false):
-	$pgPassedId = $gloUserUID;
+$pgKwikSlug = wtkSqlGetOneResult($pgSQL, [$pgPassedId]);
+
+if ($pgKwikSlug != ''):
+    $pgURL = $gloWebBaseURL . '/' . $pgKwikSlug;
+else:
+    $pgURL = $gloWebBaseURL . '/card.php?id=' . $pgPassedId;
 endif;
-$pgURL = $gloWebBaseURL . '/card.php?id=' . $pgPassedId ;
 
 $pgQRimage  = '<img src="/login/makeQRcode.php?pw=LowCodeOrDie&url=' . $pgURL . '"';
 $pgQRimage .= ' class="responsive-img transparent">';

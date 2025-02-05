@@ -9,7 +9,7 @@ endif;
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>@PageTitle@</title>
+	<title>KwikLink</title>
 	<link rel="stylesheet" href="/wtk/css/materialIcons.css"/>
 	<link rel="stylesheet" href="/wtk/css/materialize.min.css">
 	<link rel="stylesheet" href="/wtk/css/wtkBlue.css">
@@ -41,14 +41,14 @@ endif;
                     <br>
                     <p>The marketing website will be built within the next week or two.
                     Meanwhile feel free to create a free account, build your
-                    KwikLink card, and start sharing it.</p>
-                    <p>There will always be a free tier for KwikLink.
-                        In the near future we will have the ability to
-                        have a custom link to your card for a minor fee.</p>
-
+                    KwikLink card, and start sharing it!</p>
                     <p>Create an account or login
                         <a href="/login/" class="btn b-shadow waves-effect waves-light">Here</a>
                     </p>
+				</div>
+				<div class="card-action">
+					<p>This site was built in only 18.7 hours using
+						<a href="https://wizardstoolkit.com/" target="_blank" style="text-transform:initial;color:#343be6">Wizard&rsquo;s Toolkit</a></p>
 				</div>
 			</div>
 		</div></div>
