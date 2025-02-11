@@ -47,7 +47,7 @@ endif;
                     </p>
 				</div>
 				<div class="card-action">
-					<p>This site was built in only 18.7 hours using
+					<p>This site was built in only 18.53 hours using
 						<a href="https://wizardstoolkit.com/" target="_blank" style="text-transform:initial;color:#343be6">Wizard&rsquo;s Toolkit</a></p>
 				</div>
 			</div>
