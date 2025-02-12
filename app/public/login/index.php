@@ -63,7 +63,7 @@ else:
     wtkSearchReplace('id="loginPage" class="full-page valign-wrapper">','id="loginPage" class="full-page"><br>');
 endif;
 
-$pgVersion = 4;
+$pgVersion = 5;
 wtkSearchReplace('wtkLibrary.js','wtkLibrary.js?v=' . $pgVersion);
 wtkSearchReplace('wtkUtils.js','wtkUtils.js?v=' . $pgVersion);
 wtkSearchReplace('wtkFileUpload.js','wtkFileUpload.js?v=' . $pgVersion);

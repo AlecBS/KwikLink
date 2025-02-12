@@ -163,35 +163,23 @@ $pgHtm .=<<<htmVAR
                 <div id="socialDIV">
 htmVAR;
 
+$pgPhoneJS = '';
+$pgSQL =<<<SQLVAR
+SELECT ul.`UID`,
+    CONCAT('<a class="btn-floating ', ss.`ButtonColor`,'">', ss.`IconHTML`, '</a>') AS `Button`,
+    CONCAT('<a class="btn btn-floating wtkdrag" draggable="true" data-id="', ul.`UID`,
+        '" data-pos="', ROW_NUMBER() OVER(ORDER BY `Priority`),
+        '" ondragstart="wtkDragStart(this);" ondrop="wtkDropId(this)" ondragover="wtkDragOver(event)">',
+        '<i class="material-icons" alt="drag to change priorty" title="drag to change priorty">drag_handle</i></a>')
+        AS `Prioritize`, ul.`SocialLink`
+  FROM `SocialSites` ss
+    INNER JOIN `UserLinks` ul ON ul.`SocialUID` = ss.`UID`
+WHERE ul.`UserUID` = :UserUID
+ORDER BY ul.`Priority` ASC
+SQLVAR;
 if ($gloDeviceType == 'phone'):
-    $pgSQL =<<<SQLVAR
-SELECT ul.`UID`,
-    CONCAT('<a class="btn-floating ', ss.`ButtonColor`,'">', ss.`IconHTML`, '</a>') AS `Button`,
-    CONCAT('<a draggable="true" ondragstart="wtkDragStart(', ul.`UID`,
-        ',', ROW_NUMBER() OVER(ORDER BY `Priority`),');" ondrop="wtkDropId(', ul.`UID`,
-        ',', ROW_NUMBER() OVER(ORDER BY `Priority`),')" ondragover="wtkDragOver(event)" class="btn btn-floating ">',
-        '<i class="material-icons" alt="drag to change priorty" title="drag to change priorty">drag_handle</i></a>')
-        AS `Prioritize`
-  FROM `SocialSites` ss
-    INNER JOIN `UserLinks` ul ON ul.`SocialUID` = ss.`UID`
-WHERE ul.`UserUID` = :UserUID
-ORDER BY ul.`Priority` ASC
-SQLVAR;
-else: // not phone
-    $pgSQL =<<<SQLVAR
-SELECT ul.`UID`,
-    CONCAT('<a class="btn-floating ', ss.`ButtonColor`,'">', ss.`IconHTML`, '</a>') AS `Button`,
-    CONCAT('<a draggable="true" ondragstart="wtkDragStart(', ul.`UID`,
-        ',', ROW_NUMBER() OVER(ORDER BY `Priority`),');" ondrop="wtkDropId(', ul.`UID`,
-        ',', ROW_NUMBER() OVER(ORDER BY `Priority`),')" ondragover="wtkDragOver(event)" class="btn btn-floating ">',
-        '<i class="material-icons" alt="drag to change priorty" title="drag to change priorty">drag_handle</i></a>')
-        AS `Prioritize`,
-    ul.`SocialLink`
-  FROM `SocialSites` ss
-    INNER JOIN `UserLinks` ul ON ul.`SocialUID` = ss.`UID`
-WHERE ul.`UserUID` = :UserUID
-ORDER BY ul.`Priority` ASC
-SQLVAR;
+    $pgSQL = wtkReplace($pgSQL, ', ul.`SocialLink`','');
+    $pgPhoneJS = 'wtkInitiatePhoneTouches();'; // will affect all drag-drop elements on page
 endif;
 $gloEditPage = '/login/socialEdit';
 $gloAddPage  = $gloEditPage;
@@ -218,32 +206,18 @@ $pgHtm .=<<<htmVAR
 
 htmVAR;
 
-if ($gloDeviceType == 'phone'):
-    $pgSQL =<<<SQLVAR
+$pgSQL =<<<SQLVAR
 SELECT `UID`,
-    CONCAT('<a draggable="true" ondragstart="wtkDragStart(', `UID`,
-        ',', ROW_NUMBER() OVER(ORDER BY `Priority`),');" ondrop="wtkDropId(', `UID`,
-        ',', ROW_NUMBER() OVER(ORDER BY `Priority`),',2)" ondragover="wtkDragOver(event)" class="btn btn-floating ">',
+    CONCAT('<a class="btn btn-floating wtkdrag" draggable="true" data-set="2"',
+        ' data-id="', `UID`, '"',
+        ' data-pos="', ROW_NUMBER() OVER(ORDER BY `Priority`), '"',
+        ' ondragstart="wtkDragStart(this);" ondrop="wtkDropId(this)" ondragover="wtkDragOver(event)">',
         '<i class="material-icons" alt="drag to change priorty" title="drag to change priorty">drag_handle</i></a>')
         AS `Prioritize`, `WebsiteName`
   FROM `UserWebsites`
 WHERE `UserUID` = :UserUID
 ORDER BY `Priority` ASC
 SQLVAR;
-else: // not phone
-    $pgSQL =<<<SQLVAR
-SELECT `UID`,
-    CONCAT('<a draggable="true" ondragstart="wtkDragStart(', `UID`,
-        ',', ROW_NUMBER() OVER(ORDER BY `Priority`),');" ondrop="wtkDropId(', `UID`,
-        ',', ROW_NUMBER() OVER(ORDER BY `Priority`),',2)" ondragover="wtkDragOver(event)" class="btn btn-floating ">',
-        '<i class="material-icons" alt="drag to change priorty" title="drag to change priorty">drag_handle</i></a>')
-        AS `Prioritize`,
-    CONCAT(`WebsiteName`, '<br>',`WebsiteLink`) AS `Website`, `WebsiteDesc` AS `Description`
-  FROM `UserWebsites`
-WHERE `UserUID` = :UserUID
-ORDER BY `Priority` ASC
-SQLVAR;
-endif;
 
 $gloEditPage = '/login/websiteEdit';
 $gloAddPage  = $gloEditPage;
@@ -318,7 +292,7 @@ makeAPicker('wtkwtkUsersBackgroundColor');
 makeAPicker('wtkwtkUsersBackgroundColor2');
 
 jscolor.trigger('input change');
-
+$pgPhoneJS
 </script>
 htmVAR;
 
