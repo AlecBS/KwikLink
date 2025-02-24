@@ -101,10 +101,8 @@ else:
 //      $pgOGtags .= '<meta name="twitter:card" content="summary_large_image" />' . "\n";
         $pgOGtags .= '<meta name="twitter:description" content="' . $pgTitle . '" />' . "\n";
     endif;
+    $pgOGtags .= '<meta property="og:title" content="' . $pgUserName . '" />' . "\n";
     if ($pgTitle != ''):
-        $pgOGtags .= '<meta property="og:title" content="' . $pgUserName . '" />' . "\n";
-    endif;
-    if ($pgOGDescription != ''):
         $pgOGDescription = wtkReplace($pgOGDescription, '"',"'");
         $pgOGtags .= '<meta name="description" property="og:description" content="' . $pgTitle . '" />' . "\n";
     endif;
