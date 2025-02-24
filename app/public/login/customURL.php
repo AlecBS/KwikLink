@@ -41,8 +41,8 @@ $pgHtm =<<<htmVAR
                 <a onclick="JavaScript:verifySlug()" class="btn">Check Availability</a>
             </div>
             <br>
-            <p>Customized URL is a premium feature but you are free to give it a
-                60-day trial.  After that we&rsquo;ll give you the option to pay
+            <p>Customized URL is a premium feature but you are free to give it a 60-day trial.
+                <br>After that we&rsquo;ll give you the option to pay
                 a one-time $5 fee or have your account switched back to using the normal link.</p>
         </div>
     </div>
