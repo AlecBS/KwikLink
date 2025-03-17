@@ -1,5 +1,6 @@
 "use strict";
 /* site-specific functions */
+var pgMPAvsSPA = 'SPA'; // set to SPA or MPA
 var pgApiKey = '';
 let pgSecLevel = 0;
 let pgHasPhoto = 'Y'; // Can be used to force user to add photo before using app
