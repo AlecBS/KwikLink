@@ -1,9 +1,3 @@
-<?php
-$gloLoginRequired = false;
-if (!isset($gloConnected)):
-	require('wtk/wtkLogin.php');
-endif;
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

@@ -6,7 +6,10 @@ RewriteEngine On
 RewriteCond %{REQUEST_URI} !^/(admin|exports|imgs|login|wtk|favicon\.ico)$
 
 # Redirect root URL to index.php
-RewriteRule ^$ index.php [L]
+# RewriteRule ^$ index.php [L]
+
+# Redirect root URL to the new URL
+RewriteRule ^$ https://kwiklink-landing.pages.dev/ [L,R=302]
 
 # Allow direct access to card.php with an id parameter
 RewriteCond %{QUERY_STRING} ^id=\d+$
@@ -16,6 +19,9 @@ RewriteRule ^card\.php$ card.php [L]
 RewriteCond %{REQUEST_URI} !^/$
 RewriteRule ^([^/]+)$ card.php?slug=$1 [L,QSA]
 
+# RewriteCond %{HTTPS} !=on
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301,NE]
+# Header always set Content-Security-Policy "upgrade-insecure-requests;"
 Options +SymLinksIfOwnerMatch
 
 <IfModule mod_expires.c>
