@@ -60,13 +60,14 @@ if (($gloDeviceType == 'phone') || ($pgMobile == 'ios')):
         $pgHtm .= wtkFormHidden('AccessMethod', 'pwa');
     endif;
 else:
-    wtkSearchReplace('id="loginPage" class="full-page valign-wrapper">','id="loginPage" class="full-page"><br>');
+    wtkSearchReplace('id="loginPage" class="full-page valign-wrapper">','id="loginPage" class="full-page valign-wrapper"><br>');
 endif;
 
-$pgVersion = 5;
+$pgVersion = 6;
 wtkSearchReplace('wtkLibrary.js','wtkLibrary.js?v=' . $pgVersion);
 wtkSearchReplace('wtkUtils.js','wtkUtils.js?v=' . $pgVersion);
 wtkSearchReplace('wtkFileUpload.js','wtkFileUpload.js?v=' . $pgVersion);
+wtkSearchReplace('wtkClientVars.js','wtkClientVars.js?v=' . $pgVersion);
 
 wtkMergePage($pgHtm, $gloCoName, '../wtk/htm/spa.htm');
 ?>
