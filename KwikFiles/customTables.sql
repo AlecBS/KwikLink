@@ -68,6 +68,7 @@ INSERT INTO `SocialSites` (`WebsiteName`, `ButtonColor`, `IconHTML`) VALUES
 ('Facebook', 'indigo darken-2', '<i class=\"fab fa-square-facebook\"></i>'),
 ('YouTube', 'red', '<i class=\"fab fa-youtube\"></i>'),
 ('Twitter', 'blue', '<i class=\"fa-brands fa-x-twitter\"></i>'),
+('Instagram', 'black', '<i class=\"fab fa-instagram\"></i>'),
 ('TikTok', 'black', '<i class=\"fa-brands fa-tiktok\"></i>'),
 ('GitHub', 'black', '<i class=\"fab fa-github\"></i>'),
 ('BlueSky', 'blue accent-3', '<i class=\"fa-brands fa-bluesky\"></i>'),
