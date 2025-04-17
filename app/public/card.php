@@ -346,7 +346,7 @@ $pgPaidAccount = 'N'; // 2ENHANCE when have Premium offering, they do not have f
 if (($pgPaidAccount == 'N') && ($pgFrom != 'dashboard')):
     $pgFooter =<<<htmVAR
     <div class="card-action black" style="line-height:9px">
-      <a href="https://kwiklink-landing.pages.dev/" style="text-transform: lowercase;">make your own KwikLink card</a>
+      <a href="https://home.kwiklink.me/" style="text-transform: lowercase;">make your own KwikLink card</a>
     </div>
 htmVAR;
     $pgTmp = wtkReplace($pgTmp, '<!--@Footer@-->',$pgFooter);

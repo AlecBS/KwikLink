@@ -9,7 +9,7 @@ RewriteCond %{REQUEST_URI} !^/(admin|exports|imgs|login|wtk|favicon\.ico)$
 # RewriteRule ^$ index.php [L]
 
 # Redirect root URL to the new URL
-RewriteRule ^$ https://kwiklink-landing.pages.dev/ [L,R=302]
+RewriteRule ^$ https://home.kwiklink.me/ [L,R=302]
 
 # Allow direct access to card.php with an id parameter
 RewriteCond %{QUERY_STRING} ^id=\d+$
